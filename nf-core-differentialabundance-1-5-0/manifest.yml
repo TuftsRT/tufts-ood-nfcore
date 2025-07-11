@@ -1,0 +1,17 @@
+---
+name: differentialabundance 1.5.0
+category: nf-core pipelines
+subcategory: rnaseq
+role: batch_connect
+description: |
+  This app will launch the [differentialabundance](https://nf-co.re/differentialabundance) pipeline developed by nf-core community. 
+
+  💡 **Clearing Saved Form Settings**
+
+  This app saves your form inputs in a cache file for future sessions.
+
+  To reset to **default** values, run the following command in a terminal:
+
+  ```
+  rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-differentialabundance-1-5-0.json
+  ```

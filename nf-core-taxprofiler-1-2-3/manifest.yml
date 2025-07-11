@@ -1,0 +1,17 @@
+---
+name: taxprofiler 1.2.3
+category: nf-core pipelines
+subcategory: metagenomics
+role: batch_connect
+description: |
+  This app will launch the [taxprofiler](https://nf-co.re/taxprofiler) pipeline developed by nf-core community. 
+
+  💡 **Clearing Saved Form Settings**
+
+  This app saves your form inputs in a cache file for future sessions.
+
+  To reset to **default** values, run the following command in a terminal:
+
+  ```
+  rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-taxprofiler-1-2-3.json
+  ```

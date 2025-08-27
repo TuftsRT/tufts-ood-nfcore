@@ -1,0 +1,473 @@
+#!/usr/bin/env perl
+#
+# verify_output
+
+#
+# RETURN CODES follow these guidelines
+# 0, everything is ok
+# 1, input is malformed
+# 2, input is properly formed, but values are outside of their allowed ranges
+#
+# If the return code is 2, then the caller can expect a single line with multiple values on the line
+# The formatting of the line is as follows: 
+# WEIGHTED_TOTAL_CHANGE%,Failed(VAR_NAME:PERCENT_CHANGE%,VAR_NAME:PERCENT_CHANGE%,VAR_NAME:PERCENT_CHANGE%,.....)
+#
+#
+# If the return code is 1, then the caller can expect multiple output lines with a crude diff 
+# of the batch job output and the expected output, or error messages.
+#
+#
+# If the return code is 0, then the caller can expect either a single WEIGHTED_TOTAL_CHANGE% line 
+# or no output in the case that no range file was specified
+#
+
+use strict;
+use English;
+use Getopt::Std;
+
+my $arg;
+my $ret = 0;
+
+# Check if we need to print the help statement
+#
+for $arg (@ARGV) {
+	if ($arg eq "-h" || $arg eq "--help") {
+		print_usage_statement();
+		exit(1);
+	}
+}
+
+my %options = ();
+my $debug;
+my $expected_stdout_filename;
+my $stdout_filename;
+my $expected_stderr_filename;
+my $stderr_filename;
+my $range_filename;
+
+getopt("oOeEdr", \%options);
+
+if (defined($options{'d'})) {
+	$debug = $options{'d'};
+} else {
+	$debug = 0;
+}
+
+
+# Check if all the required command line options were passed to the script
+#
+if (defined($options{'o'})) {
+	$stdout_filename = $options{'o'};
+} 
+
+if (defined($options{'O'})) {
+	$expected_stdout_filename = $options{'O'};
+}
+
+if (defined($options{'e'})) {
+	$stderr_filename = $options{'e'};
+}
+
+if (defined($options{'E'})) {
+	$expected_stderr_filename = $options{'E'};
+}
+
+if (defined($options{'r'})) {
+	$range_filename = $options{'r'};
+}
+
+# Print out a message if the required parameters were not passed
+#
+if (!defined($stdout_filename) || !defined($expected_stdout_filename) || !defined($stderr_filename) || !defined($expected_stderr_filename)) {
+	print_usage_statement();
+	exit(1);
+}
+
+# Create file handles and open the input files
+#
+my $OUT;
+my $EXPECTED_OUT;
+
+my $ERR;
+my $EXPECTED_ERR;
+
+open($OUT, "<", $stdout_filename) or die $!;
+open($EXPECTED_OUT, "<", $expected_stdout_filename) or die $!;
+
+open($ERR, "<", $stderr_filename) or die $!;
+open($EXPECTED_ERR, "<", $expected_stderr_filename) or die $!;
+
+# Load input files into arrays, line by line
+#
+my @out = <$OUT>;
+my $out_lines = @out;
+my @expected_out = <$EXPECTED_OUT>;
+my $out_match = 1;
+
+my @err = <$ERR>;
+my $err_lines = @err;
+my @expected_err = <$EXPECTED_ERR>;
+my $err_match = 1;
+
+my @tag_names = ();
+my %extracted_values = ();
+my %percent_changes = ();
+
+my $i;
+my $j;
+my $extracted_value_count;
+
+$out_match = validate_file(\@out, \@expected_out, "STDOUT");
+$err_match = validate_file(\@err, \@expected_err, "STDERR");
+
+if ($err_match != 0 || $out_match != 0 || $ret == 1) {
+	# Exit on bad matches
+	# 
+	exit(1);
+}
+
+$extracted_value_count = keys(%extracted_values);
+
+# Check if range file exists and if so check that the extracted variables 
+# are within the tolerences specified by the range file
+#
+if (defined($range_filename)) {
+	my $RANGE;
+	my $tag;
+	my $expected;
+	my $low;
+	my $high;
+	my $weight;
+	my $total_change = 0;
+	my $total_weight = 0;
+
+	my $output_string = "";
+	my $temp_string = "";
+
+	open($RANGE, "<", $range_filename) or die($!);
+
+	my @ranges = <$RANGE>;
+	my $num_ranges = @ranges;
+
+	my %range_hash = ();
+
+	# Loop over the ranges, adding them to a hash and checking for uniqueness
+	#
+	for ($i = 0; $i < $num_ranges; $i++) {
+		($tag, $expected, $low, $high, $weight) = split(/\s+/, $ranges[$i]);
+
+		# Check that each tag is unique
+		if (!defined($range_hash{$tag})) {
+			$range_hash{$tag} = [$expected, $low, $high, $weight];
+		} else {
+			$output_string .= sprintf ("Variable \"$tag\" defined more than once in range file\n");
+			exit(1);
+		}
+	}
+	print ("| Benchmark Numbers- ");
+	# Loop over the range hash and check that each variable has been extracted
+	#
+	foreach my $key (keys %range_hash) {
+		($expected, $low, $high, $weight) = @{$range_hash{$key}};
+		if (defined($extracted_values{$key})) {
+			$percent_changes{$key} = ($extracted_values{$key} - $expected) / $expected * 100;
+			print ("$key : $extracted_values{$key} ");
+			delete $extracted_values{$key};
+
+					
+			# Sum up all the weighted changes, and the weights themselves
+			#
+			$total_change = $total_change + $percent_changes{$key} * $weight;
+			$total_weight = $total_weight + abs($weight);
+
+			# Check if the percentage change is within tolerance
+			#
+			if ($percent_changes{$key} < $low || $high < $percent_changes{$key}) {
+				$temp_string .= sprintf("$key:%+.1f%%,", $percent_changes{$key});
+				$ret = 2;
+			}
+		} 
+	}
+	
+	if ($total_weight != 0) {
+		
+		$output_string = sprintf("%+.1f%%", $total_change / $total_weight);
+	} else {
+		# Include the % at the end for the sake of avoiding special cases in any
+		# Splitting and parsing code that reads the output
+		$output_string = sprintf("UNDEFINED%");
+	}
+
+	if ($temp_string ne "") {
+		$temp_string =~ s/,$//g;
+		$output_string .= ",Failed($temp_string)\n";
+	}
+	
+	# Check that every extracted variable has been accounted for
+	#
+	if (keys(%extracted_values) == 0) {
+		print "$output_string";
+	} else {
+		print "Variables found in output without range file entry\n";
+		$ret = 1;
+	}
+}
+exit($ret);
+
+# validate_file(@file_lines, @expected_files, $file_name
+# Returns 0 on successful validation, 1 on a formatting diffence
+#
+sub validate_file {
+	no warnings 'uninitialized';
+	my $ref_file_lines = $_[0];
+	my $ref_expected_lines = $_[1];
+	my $file_name = $_[2];
+
+	my @file_lines = @{$ref_file_lines};
+	my @expected_lines = @{$ref_expected_lines};
+
+	my @extracted_file_values;
+	my $extracted_value_count;
+
+	my $expected_copy;
+
+	my $match = 1;
+	my @tag_names;
+	my $skip;
+	my $reseq;
+	my $diff_first_line;
+	my $diff_last_line;
+	my $diff_buffer_plus;
+	my $diff_buffer_minus;
+	my $option_out;
+
+	if (@_ == 3) {
+		# Loop over the rows of the file
+		#
+		$diff_last_line = 0;
+		$diff_buffer_plus = "";
+		$diff_buffer_minus = "";
+		# Skip over optional output if it's not present in the output 
+		# Or add it to the output without the tag if it is present
+		#
+		for ($i = 0; $i < @expected_lines; $i++) {
+			if ($expected_lines[$i] =~ m/^\$\{\?\}/) {
+				($option_out = $expected_lines[$i]) =~ s/^\$\{\?\}//g;
+				if ($option_out =~ m/\$\{\*\}/) {
+					$option_out =~ s/ \$\{\*\}//;
+					$option_out =~ s/\R//;
+				}
+				if ($file_lines[$i] =~ m/\Q$option_out\E/) { # If this matches changed the expected_line to that
+					$expected_lines[$i] =~ s/\$\{\?\}//g;
+				} else {
+					$skip = 1;
+					while ($expected_lines[$i + $skip] =~ m/^\$\{\?\}/) {
+						($option_out = $expected_lines[$i + $skip]) =~ s/^\$\{\?\}//;
+						if ($option_out eq $file_lines[$i]) {
+							$expected_lines[$i + $skip] =~ s/\$\{\?\}//;
+						} else {
+							$skip++;
+						}
+					}
+					for ($reseq = $i; $reseq < @expected_lines - $skip; $reseq++) {
+						$expected_lines[$reseq] = $expected_lines[$reseq + $skip];
+					}
+					$#expected_lines = $#expected_lines - $skip;
+				}	
+			}	
+		}
+		for ($i = 0; $i < @file_lines; $i++) {
+			# Strip tailing whitespace from each output line
+			#
+			$file_lines[$i] =~ s/[\t ]*$//g;
+
+			# If this line marks the beginning of a standard change-in-default-version warning,
+			# skip that entire warning as not a meaningful error/difference for testing purposes.
+			#
+			while ($i < (@file_lines - 3) && ( (
+					   $file_lines[$i]     =~ m/^Error in module: /
+					&& $file_lines[$i + 1] =~ m/\*\*\*\*\*\*\*\*\*  IMPORTANT ~ Please Read  \*\*\*\*\*\*\*\*\*\*/
+					&& $file_lines[$i + 2] =~ m/ the default version of /
+				) || (
+					   $file_lines[$i]     =~ m/^\s*$/
+					&& $file_lines[$i + 1] =~ m/\*\*\*\*\*\*\*\*\*  IMPORTANT ~ Please Read  \*\*\*\*\*\*\*\*\*\*/
+					&& $file_lines[$i + 3] =~ m/ the default version of /
+				) ) ) {
+
+				$skip = 3;
+				while ($file_lines[$i + $skip] !~ m/\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*/) {
+					$skip++;
+				}
+
+				for ($reseq = $i; $reseq < @file_lines - $skip; $reseq++) {
+					$file_lines[$reseq] = $file_lines[$reseq + $skip + 1];
+				}
+				$#file_lines = @file_lines - $skip - 2;
+			}
+			if ($i == @file_lines) {
+				next;
+			}
+
+			# If this line marks the beginning of a SAS license warning,
+			# skip that entire warning as not a meaningful error/difference for testing purposes.
+			#
+			while ($file_lines[$i] =~ m/^WARNING: .* SAS /) {
+				$skip = 1;
+				while ($file_lines[$i + $skip] =~ m/^         /
+					|| $file_lines[$i + $skip] =~ m/^To locate the name of your SAS Installation Representative /
+					|| $file_lines[$i + $skip] =~ m/ On the SAS REP list provided, /
+					) {
+					$skip++;
+				}
+				for ($reseq = $i; $reseq < @file_lines - $skip; $reseq++) {
+					$file_lines[$reseq] = $file_lines[$reseq + $skip];
+				}
+				$#file_lines = @file_lines - $skip - 1;
+			}
+			if ($i == @file_lines) {
+				next;
+			}
+
+			# Make a copy of the original line to use in the diff later
+			#
+			$expected_copy = $expected_lines[$i];
+			if (defined($expected_lines[$i])) {
+				# Extract the tag names before we do anything else
+				#
+				@tag_names = $expected_lines[$i] =~ /\$\{([a-zA-Z_\-0-9]+)\}/g;
+
+				# Need to escape any regex characters
+				#
+				$expected_lines[$i] =~ s/(\.|\+|\*|\$|\^|\(|\)|\?|\{|\}|\||\\|\[|\])/\\$1/g;
+
+				# Replace the special patterns ${*} and ${VARNAME} with appropriate regexs
+				#
+				$expected_lines[$i] =~ s/\\\$\\\{\\\*\\\}/\.\*/g;
+
+				# ${HOST} and ${HOST_FULL} are special cases and are treated as literals, rather than as variables
+				# This is because testpbs already performs some pattern matching on the hostnames
+				#
+				$expected_lines[$i] =~ s/\\\$\\\{HOST\\\}/\\\${HOST}/g;
+				$expected_lines[$i] =~ s/\\\$\\\{HOST_FULL\\\}/\\\${HOST_FULL}/g;
+
+				$expected_lines[$i] =~ s/\\\$\\\{[a-zA-Z_\-0-9]+\\\}/[\t ]*\([0-9]+\(?:\\\.[0-9]+\)\?\)[\t ]*/g;
+
+				# Strip tailing whitespace from the end of the line
+				# 
+				$expected_lines[$i] =~ s/[\t ]*$//g;
+			}
+			# Verify the output line matches the expected line or print DIFF
+			#
+			if (!defined($expected_lines[$i]) || $file_lines[$i] !~ m/$expected_lines[$i]/
+					|| (($expected_lines[$i] eq "" || $expected_lines[$i] eq "\n")
+					&& !($file_lines[$i] eq "" || $file_lines[$i] eq "\n"))) {
+				if ($match == 1) {
+					print "=====================================================\n";
+					print "==================== $file_name DIFF ====================\n";
+					print "=====================================================\n";
+				}
+
+				if ($i > $diff_last_line && ($diff_buffer_plus ne "" || $diff_buffer_minus ne "")) {
+					print "\@\@ ", $diff_first_line, ",", $diff_last_line, " \@\@\n";
+					print $diff_buffer_plus;
+					print $diff_buffer_minus;
+					$diff_buffer_plus = "";
+					$diff_buffer_minus = "";
+				}
+				if ($diff_buffer_plus eq "" && $diff_buffer_minus eq "") {
+					$diff_first_line = $i + 1;
+				}
+				$diff_last_line = $i + 1;
+
+				$diff_buffer_plus .= "+ $file_lines[$i]";
+				if (defined($expected_copy)) {
+					$diff_buffer_minus .= "- $expected_copy";
+				} else {
+					$diff_buffer_minus .= "- \n";
+				}
+		
+				$match = 0;
+				
+				$ret = 1;
+			}
+
+			# Extract the numeric values associated with each tag
+			#
+			if (defined($expected_lines[$i])) {
+				@extracted_file_values = $file_lines[$i] =~ /$expected_lines[$i]/g;
+				$extracted_value_count = @extracted_file_values;
+
+				if ($extracted_value_count == @tag_names) {
+					for ($j = 0; $j < @extracted_file_values; $j++) {
+				
+						# Check if tag has appeared more than once
+						#
+						if (!defined($extracted_values{$tag_names[$j]})) {
+							$extracted_values{$tag_names[$j]} = $extracted_file_values[$j];
+						} else {
+							print "Duplicate variable: $tag_names[$j]\n";
+							$ret = 1;
+						}
+					}
+				} elsif ($extracted_value_count != 1 && @tag_names == 0) {
+					print "Variable count mismatch\n";
+					$ret = 1;
+				}
+			}
+		}
+
+		# Check that the expected output doesn't run longer than the actual output
+		# unless the only values in the expected output are wildcards or empty lines
+		#
+		for (; $i < @expected_lines; $i++) {
+			
+			if ("\n" ne $expected_lines[$i] && "\${*}\n" ne $expected_lines[$i]) {
+				if ($match == 1) {
+					print "=====================================================\n";
+					print "==================== $file_name DIFF ====================\n";
+					print "=====================================================\n";
+				}
+
+				if ($i > $diff_last_line && ($diff_buffer_plus ne "" || $diff_buffer_minus ne "")) {
+					print "\@\@ ", $diff_first_line, ",", $diff_last_line, " \@\@\n";
+					print $diff_buffer_plus;
+					print $diff_buffer_minus;
+					$diff_buffer_plus = "";
+					$diff_buffer_minus = "";
+				}
+				if ($diff_buffer_plus eq "" && $diff_buffer_minus eq "") {
+					$diff_first_line = $i + 1;
+				}
+				$diff_last_line = $i + 1;
+
+				$diff_buffer_plus .= "+ \n";
+				if (defined($expected_lines[$i])) {
+					$diff_buffer_minus .= "- $expected_lines[$i]";
+				} else {
+					$diff_buffer_minus .= "- \n";
+				}
+		
+				$match = 0;
+				$ret = 1;
+			}
+		}
+
+		if ($diff_buffer_plus ne "" || $diff_buffer_minus ne "") {
+			print "\@\@ ", $diff_first_line, ",", $diff_last_line, " \@\@\n";
+			print $diff_buffer_plus;
+			print $diff_buffer_minus;
+		}
+	}
+	if ($match == 1) {
+		return(0);
+	} else {
+		return($ret);
+	}
+}
+
+# Procedure to handle usage statement printing
+#
+sub print_usage_statement {
+	print STDERR "verify_output -o <out file> -O <expected out file> -e <err file> -E <expected err file> [-r <range file>]";
+}
+

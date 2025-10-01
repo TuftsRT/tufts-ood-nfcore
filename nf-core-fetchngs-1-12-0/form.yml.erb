@@ -12,8 +12,8 @@ attributes:
     options:
     - [
         "slurm", "slurm",
-        data-hide-cpu-partition: true,
-        data-hide-num-core: true,
+        data-hide-partition: true,
+        data-hide-num-cores: true,
         data-hide-num-memory: true
       ]
     - ["local", "local"]
@@ -138,7 +138,7 @@ form:
   - bc_num_hours
   - executor
   - partition
-  - num_core
+  - num_cores
   - num_memory
   - workdir
   - input_output_options

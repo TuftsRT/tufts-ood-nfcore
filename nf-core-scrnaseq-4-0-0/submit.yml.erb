@@ -8,7 +8,7 @@ script:
   email_on_started: true
   email_on_terminated: true
   email: <%= ENV["USER"] %>@tufts.edu
-  job_name: "OnDemand/nf-core_nf-core-fetchngs"
+  job_name: "OnDemand/nf-core_nf-core-scrnaseq"
   native:
     - "--time"
     - "<%= bc_num_hours %>:0:0"
@@ -19,7 +19,7 @@ script:
     - "2"
     <%- elsif executor == "local" -%>
     - "-n"
-    - "<%= num_cores %>"
+    - "<%= num_core %>"
     - "--mem"
     - "<%= num_memory %>"
     - "-p"

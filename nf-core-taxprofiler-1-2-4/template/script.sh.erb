@@ -64,7 +64,7 @@ nextflow_command=("nextflow run $pipeline_version -params-file nf-params.json")
 
 if [[ "<%= context.executor %>" == "slurm" ]]; then
     echo "Using Tufts profile (Slurm execution)."  # TODO
-    nextflow_command+=("-profile tufts" "--partition <%= context.cpu_partition %>")
+    nextflow_command+=("-profile tufts")
 else
     echo "Running in local mode (single-node execution)."
 

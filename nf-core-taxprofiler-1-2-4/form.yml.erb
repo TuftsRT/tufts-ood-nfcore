@@ -13,7 +13,7 @@ attributes:
     - [
         "slurm", "slurm",
         data-hide-partition: true,
-        data-hide-num-core: true,
+        data-hide-num-cores: true,
         data-hide-num-memory: true
       ]
     - ["local", "local"]
@@ -47,7 +47,7 @@ attributes:
 
 
   input_output_options:
-    label: Input/output options
+    label: "Input/output options"
     widget: 'check_box'
     html_options:
       data:
@@ -59,7 +59,7 @@ attributes:
     help: "Define where the pipeline should find input data and save output data."
 
   input:
-    label: input
+    label: "input"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -68,7 +68,7 @@ attributes:
     help: "Path to comma-separated file containing information about the samples and libraries/runs."
 
   databases:
-    label: databases
+    label: "databases"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -77,7 +77,7 @@ attributes:
     help: "Path to comma-separated file containing information about databases and profiling parameters for each taxonomic profiler"
 
   save_untarred_databases:
-    label: save_untarred_databases
+    label: "save_untarred_databases"
     widget: select
     options:
       - ['false', 'false']
@@ -85,7 +85,7 @@ attributes:
     help: "Specify to save decompressed user-supplied TAR archives of databases"
 
   outdir:
-    label: outdir
+    label: "outdir"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -94,12 +94,12 @@ attributes:
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
-    label: multiqc_title
+    label: "multiqc_title"
     widget: text_field
     help: "MultiQC report title. Printed as page header, used for filename if not otherwise specified."
 
   preprocessing_general_qc_options:
-    label: Preprocessing general QC options
+    label: "Preprocessing general QC options"
     widget: 'check_box'
     html_options:
       data:
@@ -110,7 +110,7 @@ attributes:
     help: "Common options across both long and short read preprocessing QC steps"
 
   skip_preprocessing_qc:
-    label: skip_preprocessing_qc
+    label: "skip_preprocessing_qc"
     widget: select
     options:
       - ['false', 'false']
@@ -118,7 +118,7 @@ attributes:
     help: "Specify to skip sequencing quality control of raw sequencing reads"
 
   preprocessing_qc_tool:
-    label: preprocessing_qc_tool
+    label: "preprocessing_qc_tool"
     widget: select
     options:
       - ['fastqc', 'fastqc']
@@ -126,7 +126,7 @@ attributes:
     help: "Specify the tool used for quality control of raw sequencing reads"
 
   save_preprocessed_reads:
-    label: save_preprocessed_reads
+    label: "save_preprocessed_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -134,7 +134,7 @@ attributes:
     help: "Save reads from samples that went through the adapter clipping, pair-merging, and length filtering steps for both short and long reads"
 
   save_analysis_ready_fastqs:
-    label: save_analysis_ready_fastqs
+    label: "save_analysis_ready_fastqs"
     widget: select
     options:
       - ['false', 'false']
@@ -142,7 +142,7 @@ attributes:
     help: "Save only the final reads from all read processing steps (that are sent to classification/profiling) in results directory."
 
   preprocessing_short_read_qc_options:
-    label: Preprocessing short-read QC options
+    label: "Preprocessing short-read QC options"
     widget: 'check_box'
     html_options:
       data:
@@ -168,7 +168,7 @@ attributes:
     help: "Options for adapter clipping, quality trimming, pair-merging, and complexity filtering"
 
   perform_shortread_qc:
-    label: perform_shortread_qc
+    label: "perform_shortread_qc"
     widget: select
     options:
       - ['false', 'false']
@@ -176,7 +176,7 @@ attributes:
     help: "Turns on short read quality control steps (adapter clipping, complexity filtering etc.)"
 
   shortread_qc_tool:
-    label: shortread_qc_tool
+    label: "shortread_qc_tool"
     widget: select
     options:
       - ['fastp', 'fastp']
@@ -184,7 +184,7 @@ attributes:
     help: "Specify which tool to use for short-read QC"
 
   shortread_qc_skipadaptertrim:
-    label: shortread_qc_skipadaptertrim
+    label: "shortread_qc_skipadaptertrim"
     widget: select
     options:
       - ['false', 'false']
@@ -192,22 +192,22 @@ attributes:
     help: "Skip adapter trimming"
 
   shortread_qc_adapter1:
-    label: shortread_qc_adapter1
+    label: "shortread_qc_adapter1"
     widget: text_field
     help: "Specify adapter 1 nucleotide sequence"
 
   shortread_qc_adapter2:
-    label: shortread_qc_adapter2
+    label: "shortread_qc_adapter2"
     widget: text_field
     help: "Specify adapter 2 nucleotide sequence"
 
   shortread_qc_adapterlist:
-    label: shortread_qc_adapterlist
+    label: "shortread_qc_adapterlist"
     widget: text_field
     help: "Specify a list of all possible adapters to trim. Overrides --shortread_qc_adapter1/2. Formats: .txt (AdapterRemoval) or .fasta. (fastp)."
 
   shortread_qc_mergepairs:
-    label: shortread_qc_mergepairs
+    label: "shortread_qc_mergepairs"
     widget: select
     options:
       - ['false', 'false']
@@ -215,7 +215,7 @@ attributes:
     help: "Turn on merging of read pairs for paired-end data"
 
   shortread_qc_includeunmerged:
-    label: shortread_qc_includeunmerged
+    label: "shortread_qc_includeunmerged"
     widget: select
     options:
       - ['false', 'false']
@@ -223,14 +223,14 @@ attributes:
     help: "Include unmerged reads from paired-end merging in the downstream analysis"
 
   shortread_qc_minlength:
-    label: shortread_qc_minlength
+    label: "shortread_qc_minlength"
     widget: number_field
     value: 15
     step: 1
     help: "Specify the minimum length of reads to be retained"
 
   shortread_qc_dedup:
-    label: shortread_qc_dedup
+    label: "shortread_qc_dedup"
     widget: select
     options:
       - ['false', 'false']
@@ -238,7 +238,7 @@ attributes:
     help: "Perform deduplication of the input reads (fastp only)"
 
   perform_shortread_complexityfilter:
-    label: perform_shortread_complexityfilter
+    label: "perform_shortread_complexityfilter"
     widget: select
     options:
       - ['false', 'false']
@@ -246,7 +246,7 @@ attributes:
     help: "Turns on nucleotide sequence complexity filtering"
 
   shortread_complexityfilter_tool:
-    label: shortread_complexityfilter_tool
+    label: "shortread_complexityfilter_tool"
     widget: select
     options:
       - ['bbduk', 'bbduk']
@@ -255,21 +255,21 @@ attributes:
     help: "Specify which tool to use for complexity filtering"
 
   shortread_complexityfilter_entropy:
-    label: shortread_complexityfilter_entropy
+    label: "shortread_complexityfilter_entropy"
     widget: number_field
     value: 0.3
     step: 1
     help: "Specify the minimum sequence entropy level for complexity filtering"
 
   shortread_complexityfilter_bbduk_windowsize:
-    label: shortread_complexityfilter_bbduk_windowsize
+    label: "shortread_complexityfilter_bbduk_windowsize"
     widget: number_field
     value: 50
     step: 1
     help: "Specify the window size for BBDuk complexity filtering"
 
   shortread_complexityfilter_bbduk_mask:
-    label: shortread_complexityfilter_bbduk_mask
+    label: "shortread_complexityfilter_bbduk_mask"
     widget: select
     options:
       - ['false', 'false']
@@ -277,14 +277,14 @@ attributes:
     help: "Turn on masking rather than discarding of low complexity reads for BBduk"
 
   shortread_complexityfilter_fastp_threshold:
-    label: shortread_complexityfilter_fastp_threshold
+    label: "shortread_complexityfilter_fastp_threshold"
     widget: number_field
     value: 30
     step: 1
     help: "Specify the minimum complexity filter threshold of fastp"
 
   shortread_complexityfilter_prinseqplusplus_mode:
-    label: shortread_complexityfilter_prinseqplusplus_mode
+    label: "shortread_complexityfilter_prinseqplusplus_mode"
     widget: select
     options:
       - ['entropy', 'entropy']
@@ -292,14 +292,14 @@ attributes:
     help: "Specify the complexity filter mode for PRINSEQ++"
 
   shortread_complexityfilter_prinseqplusplus_dustscore:
-    label: shortread_complexityfilter_prinseqplusplus_dustscore
+    label: "shortread_complexityfilter_prinseqplusplus_dustscore"
     widget: number_field
     value: 0.5
     step: 1
     help: "Specify the minimum dust score for PRINTSEQ++ complexity filtering"
 
   save_complexityfiltered_reads:
-    label: save_complexityfiltered_reads
+    label: "save_complexityfiltered_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -307,7 +307,7 @@ attributes:
     help: "Save reads from samples that went through the complexity filtering step"
 
   preprocessing_long_read_qc_options:
-    label: Preprocessing long-read QC options
+    label: "Preprocessing long-read QC options"
     widget: 'check_box'
     html_options:
       data:
@@ -323,7 +323,7 @@ attributes:
     help: "Options for adapter clipping, quality trimming, and length filtering"
 
   perform_longread_qc:
-    label: perform_longread_qc
+    label: "perform_longread_qc"
     widget: select
     options:
       - ['false', 'false']
@@ -331,7 +331,7 @@ attributes:
     help: "Turns on long read quality control steps (adapter clipping, length filtering etc.)"
 
   longread_adapterremoval_tool:
-    label: longread_adapterremoval_tool
+    label: "longread_adapterremoval_tool"
     widget: select
     options:
       - ['porechop_abi', 'porechop_abi']
@@ -339,7 +339,7 @@ attributes:
     help: "Specify which tool to use for adapter trimming."
 
   longread_qc_skipadaptertrim:
-    label: longread_qc_skipadaptertrim
+    label: "longread_qc_skipadaptertrim"
     widget: select
     options:
       - ['false', 'false']
@@ -347,7 +347,7 @@ attributes:
     help: "Skip long-read trimming"
 
   longread_filter_tool:
-    label: longread_filter_tool
+    label: "longread_filter_tool"
     widget: select
     options:
       - ['nanoq', 'nanoq']
@@ -355,7 +355,7 @@ attributes:
     help: "Specify which tool to use for long reads filtering"
 
   longread_qc_skipqualityfilter:
-    label: longread_qc_skipqualityfilter
+    label: "longread_qc_skipqualityfilter"
     widget: select
     options:
       - ['false', 'false']
@@ -363,35 +363,35 @@ attributes:
     help: "Skip long-read length and quality filtering"
 
   longread_qc_qualityfilter_minlength:
-    label: longread_qc_qualityfilter_minlength
+    label: "longread_qc_qualityfilter_minlength"
     widget: number_field
     value: 1000
     step: 1
     help: "Specify the minimum length of reads to be retained"
 
   longread_qc_qualityfilter_keeppercent:
-    label: longread_qc_qualityfilter_keeppercent
+    label: "longread_qc_qualityfilter_keeppercent"
     widget: number_field
     value: 90
     step: 1
     help: "Specify the percent of high-quality bases to be retained"
 
   longread_qc_qualityfilter_targetbases:
-    label: longread_qc_qualityfilter_targetbases
+    label: "longread_qc_qualityfilter_targetbases"
     widget: number_field
     value: 500000000
     step: 1
     help: "Filtlong only: specify the number of high-quality bases in the library to be retained"
 
   longread_qc_qualityfilter_minquality:
-    label: longread_qc_qualityfilter_minquality
+    label: "longread_qc_qualityfilter_minquality"
     widget: number_field
     value: 7
     step: 1
     help: "Nanoq only: specify the minimum average read quality filter (Q)"
 
   redundancy_estimation:
-    label: Redundancy Estimation
+    label: "Redundancy Estimation"
     widget: 'check_box'
     html_options:
       data:
@@ -400,7 +400,7 @@ attributes:
     help: "Estimate metagenome sequencing complexity coverage"
 
   perform_shortread_redundancyestimation:
-    label: perform_shortread_redundancyestimation
+    label: "perform_shortread_redundancyestimation"
     widget: select
     options:
       - ['false', 'false']
@@ -408,7 +408,7 @@ attributes:
     help: "Turn on short-read metagenome sequencing redundancy estimation with nonpareil. Warning: only use for shallow short-read sequencing datasets."
 
   shortread_redundancyestimation_mode:
-    label: shortread_redundancyestimation_mode
+    label: "shortread_redundancyestimation_mode"
     widget: select
     options:
       - ['kmer', 'kmer']
@@ -416,7 +416,7 @@ attributes:
     help: "Specify mode for identifying redundant reads"
 
   preprocessing_host_removal_options:
-    label: Preprocessing host removal options
+    label: "Preprocessing host removal options"
     widget: 'check_box'
     html_options:
       data:
@@ -431,7 +431,7 @@ attributes:
     help: "Options for pre-profiling host read removal"
 
   perform_shortread_hostremoval:
-    label: perform_shortread_hostremoval
+    label: "perform_shortread_hostremoval"
     widget: select
     options:
       - ['false', 'false']
@@ -439,7 +439,7 @@ attributes:
     help: "Turn on short-read host removal"
 
   perform_longread_hostremoval:
-    label: perform_longread_hostremoval
+    label: "perform_longread_hostremoval"
     widget: select
     options:
       - ['false', 'false']
@@ -447,7 +447,7 @@ attributes:
     help: "Turn on long-read host removal"
 
   hostremoval_reference:
-    label: hostremoval_reference
+    label: "hostremoval_reference"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -456,7 +456,7 @@ attributes:
     help: "Specify path to single reference FASTA of host(s) genome(s)"
 
   shortread_hostremoval_index:
-    label: shortread_hostremoval_index
+    label: "shortread_hostremoval_index"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -465,7 +465,7 @@ attributes:
     help: "Specify path to the directory containing pre-made BowTie2 indexes of the host removal reference"
 
   longread_hostremoval_index:
-    label: longread_hostremoval_index
+    label: "longread_hostremoval_index"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -474,7 +474,7 @@ attributes:
     help: "Specify path to a pre-made Minimap2 index file (.mmi) of the host removal reference"
 
   save_hostremoval_index:
-    label: save_hostremoval_index
+    label: "save_hostremoval_index"
     widget: select
     options:
       - ['false', 'false']
@@ -482,7 +482,7 @@ attributes:
     help: "Save mapping index of input reference when not already supplied by user"
 
   save_hostremoval_bam:
-    label: save_hostremoval_bam
+    label: "save_hostremoval_bam"
     widget: select
     options:
       - ['false', 'false']
@@ -490,7 +490,7 @@ attributes:
     help: "Saved mapped and unmapped reads in BAM format from host removal"
 
   save_hostremoval_unmapped:
-    label: save_hostremoval_unmapped
+    label: "save_hostremoval_unmapped"
     widget: select
     options:
       - ['false', 'false']
@@ -498,7 +498,7 @@ attributes:
     help: "Save reads from samples that went through the host-removal step"
 
   preprocessing_run_merging_options:
-    label: Preprocessing run merging options
+    label: "Preprocessing run merging options"
     widget: 'check_box'
     html_options:
       data:
@@ -507,7 +507,7 @@ attributes:
     help: "Options for per-sample run-merging"
 
   perform_runmerging:
-    label: perform_runmerging
+    label: "perform_runmerging"
     widget: select
     options:
       - ['false', 'false']
@@ -515,7 +515,7 @@ attributes:
     help: "Turn on run merging"
 
   save_runmerged_reads:
-    label: save_runmerged_reads
+    label: "save_runmerged_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -523,7 +523,7 @@ attributes:
     help: "Save reads from samples that went through the run-merging step"
 
   profiling_options:
-    label: Profiling options
+    label: "Profiling options"
     widget: 'check_box'
     html_options:
       data:
@@ -566,7 +566,7 @@ attributes:
         hide-ganon_report_maxcount-when-un-checked: true
 
   run_centrifuge:
-    label: run_centrifuge
+    label: "run_centrifuge"
     widget: select
     options:
       - ['false', 'false']
@@ -574,7 +574,7 @@ attributes:
     help: "Turn on profiling with Centrifuge. Requires database to be present CSV file passed to --databases"
 
   centrifuge_save_reads:
-    label: centrifuge_save_reads
+    label: "centrifuge_save_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -582,7 +582,7 @@ attributes:
     help: "Turn on saving of Centrifuge-aligned reads"
 
   run_diamond:
-    label: run_diamond
+    label: "run_diamond"
     widget: select
     options:
       - ['false', 'false']
@@ -590,7 +590,7 @@ attributes:
     help: "Turn on profiling with DIAMOND. For unmerged paired-read libraries, only read1 will be used Requires database to be present CSV file passed to --databases"
 
   diamond_output_format:
-    label: diamond_output_format
+    label: "diamond_output_format"
     widget: select
     options:
       - ['tsv', 'tsv']
@@ -603,7 +603,7 @@ attributes:
     help: "Specify output format from DIAMOND profiling."
 
   diamond_save_reads:
-    label: diamond_save_reads
+    label: "diamond_save_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -611,7 +611,7 @@ attributes:
     help: "Turn on saving of DIAMOND-aligned reads. Will override --diamond_output_format and no taxon tables will be generated"
 
   run_kaiju:
-    label: run_kaiju
+    label: "run_kaiju"
     widget: select
     options:
       - ['false', 'false']
@@ -619,7 +619,7 @@ attributes:
     help: "Turn on profiling with Kaiju. Requires database to be present CSV file passed to --databases"
 
   kaiju_expand_viruses:
-    label: kaiju_expand_viruses
+    label: "kaiju_expand_viruses"
     widget: select
     options:
       - ['false', 'false']
@@ -627,7 +627,7 @@ attributes:
     help: "Turn on expanding of virus hits to individual viruses rather than aggregating at a taxonomic level."
 
   kaiju_taxon_rank:
-    label: kaiju_taxon_rank
+    label: "kaiju_taxon_rank"
     widget: select
     options:
       - ['species', 'species']
@@ -639,7 +639,7 @@ attributes:
     help: "Specify taxonomic rank to be displayed in Kaiju taxon table"
 
   run_kraken2:
-    label: run_kraken2
+    label: "run_kraken2"
     widget: select
     options:
       - ['false', 'false']
@@ -647,7 +647,7 @@ attributes:
     help: "Turn on profiling with Kraken2. Requires database to be present CSV file passed to --databases"
 
   kraken2_save_reads:
-    label: kraken2_save_reads
+    label: "kraken2_save_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -655,7 +655,7 @@ attributes:
     help: "Turn on saving of Kraken2-aligned reads"
 
   kraken2_save_readclassifications:
-    label: kraken2_save_readclassifications
+    label: "kraken2_save_readclassifications"
     widget: select
     options:
       - ['false', 'false']
@@ -663,7 +663,7 @@ attributes:
     help: "Turn on saving of Kraken2 per-read taxonomic assignment file"
 
   kraken2_save_minimizers:
-    label: kraken2_save_minimizers
+    label: "kraken2_save_minimizers"
     widget: select
     options:
       - ['false', 'false']
@@ -671,7 +671,7 @@ attributes:
     help: "Turn on saving minimizer information in the kraken2 report thus increasing to an eight column layout."
 
   run_krakenuniq:
-    label: run_krakenuniq
+    label: "run_krakenuniq"
     widget: select
     options:
       - ['false', 'false']
@@ -679,7 +679,7 @@ attributes:
     help: "Turn on profiling with KrakenUniq. Requires one or more KrakenUniq databases to be present in the CSV file passed to --databases."
 
   krakenuniq_save_reads:
-    label: krakenuniq_save_reads
+    label: "krakenuniq_save_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -687,12 +687,12 @@ attributes:
     help: "Turn on saving of KrakenUniq (un-)classified reads as FASTA."
 
   krakenuniq_ram_chunk_size:
-    label: krakenuniq_ram_chunk_size
+    label: "krakenuniq_ram_chunk_size"
     widget: text_field
     help: "Specify a RAM chunk size for all KrakenUniq databases when loading into memory when you want to load via chunks. Specify in `--databases` for per-database values."
 
   krakenuniq_save_readclassifications:
-    label: krakenuniq_save_readclassifications
+    label: "krakenuniq_save_readclassifications"
     widget: select
     options:
       - ['false', 'false']
@@ -700,14 +700,14 @@ attributes:
     help: "Turn on saving of KrakenUniq per-read taxonomic assignment file."
 
   krakenuniq_batch_size:
-    label: krakenuniq_batch_size
+    label: "krakenuniq_batch_size"
     widget: number_field
     value: 20
     step: 1
     help: "Specify the number of samples for each KrakenUniq run."
 
   run_bracken:
-    label: run_bracken
+    label: "run_bracken"
     widget: select
     options:
       - ['false', 'false']
@@ -715,7 +715,7 @@ attributes:
     help: "Turn on Bracken (and the required Kraken2 prerequisite step)."
 
   bracken_save_intermediatekraken2:
-    label: bracken_save_intermediatekraken2
+    label: "bracken_save_intermediatekraken2"
     widget: select
     options:
       - ['false', 'false']
@@ -723,7 +723,7 @@ attributes:
     help: "Turn on the saving of the intermediate Kraken2 files used as input to Bracken itself into Kraken2 results folder"
 
   run_malt:
-    label: run_malt
+    label: "run_malt"
     widget: select
     options:
       - ['false', 'false']
@@ -731,7 +731,7 @@ attributes:
     help: "Turn on profiling with MALT. Requires database to be present CSV file passed to --databases"
 
   malt_mode:
-    label: malt_mode
+    label: "malt_mode"
     widget: select
     options:
       - ['BlastN', 'BlastN']
@@ -742,7 +742,7 @@ attributes:
     help: "Specify which MALT alignment mode to use"
 
   malt_save_reads:
-    label: malt_save_reads
+    label: "malt_save_reads"
     widget: select
     options:
       - ['false', 'false']
@@ -750,7 +750,7 @@ attributes:
     help: "Turn on saving of MALT-aligned reads"
 
   malt_generate_megansummary:
-    label: malt_generate_megansummary
+    label: "malt_generate_megansummary"
     widget: select
     options:
       - ['false', 'false']
@@ -758,7 +758,7 @@ attributes:
     help: "Turn on generation of MEGAN summary file from MALT results"
 
   run_metaphlan:
-    label: run_metaphlan
+    label: "run_metaphlan"
     widget: select
     options:
       - ['false', 'false']
@@ -766,7 +766,7 @@ attributes:
     help: "Turn on profiling with MetaPhlAn. Requires database to be present CSV file passed to --databases"
 
   run_motus:
-    label: run_motus
+    label: "run_motus"
     widget: select
     options:
       - ['false', 'false']
@@ -774,7 +774,7 @@ attributes:
     help: "Turn on profiling with mOTUs. Requires database to be present CSV file passed to --databases"
 
   motus_use_relative_abundance:
-    label: motus_use_relative_abundance
+    label: "motus_use_relative_abundance"
     widget: select
     options:
       - ['false', 'false']
@@ -782,7 +782,7 @@ attributes:
     help: "Turn on printing relative abundance instead of counts."
 
   motus_save_mgc_read_counts:
-    label: motus_save_mgc_read_counts
+    label: "motus_save_mgc_read_counts"
     widget: select
     options:
       - ['false', 'false']
@@ -790,7 +790,7 @@ attributes:
     help: "Turn on saving the mgc reads count."
 
   motus_remove_ncbi_ids:
-    label: motus_remove_ncbi_ids
+    label: "motus_remove_ncbi_ids"
     widget: select
     options:
       - ['false', 'false']
@@ -798,7 +798,7 @@ attributes:
     help: "Turn on removing NCBI taxonomic IDs."
 
   run_kmcp:
-    label: run_kmcp
+    label: "run_kmcp"
     widget: select
     options:
       - ['false', 'false']
@@ -806,7 +806,7 @@ attributes:
     help: "Turn on classification with KMCP."
 
   kmcp_save_search:
-    label: kmcp_save_search
+    label: "kmcp_save_search"
     widget: select
     options:
       - ['false', 'false']
@@ -814,7 +814,7 @@ attributes:
     help: "Turn on saving the output of KMCP search"
 
   run_ganon:
-    label: run_ganon
+    label: "run_ganon"
     widget: select
     options:
       - ['false', 'false']
@@ -822,7 +822,7 @@ attributes:
     help: "Turn on profiling with ganon. Requires database to be present CSV file passed to --databases."
 
   ganon_save_readclassifications:
-    label: ganon_save_readclassifications
+    label: "ganon_save_readclassifications"
     widget: select
     options:
       - ['false', 'false']
@@ -830,7 +830,7 @@ attributes:
     help: "Turn on saving of ganon per-read taxonomic assignment file(s)."
 
   ganon_report_type:
-    label: ganon_report_type
+    label: "ganon_report_type"
     widget: select
     options:
       - ['reads', 'reads']
@@ -841,34 +841,34 @@ attributes:
     help: "Specify the type of ganon report to save."
 
   ganon_report_rank:
-    label: ganon_report_rank
+    label: "ganon_report_rank"
     widget: text_field
     value: "default"
     help: "Specify the taxonomic report the ganon report file should display."
 
   ganon_report_toppercentile:
-    label: ganon_report_toppercentile
+    label: "ganon_report_toppercentile"
     widget: number_field
     value: 0
     step: 1
     help: "Specify a percentile within which hits will be reported in ganon report output.."
 
   ganon_report_mincount:
-    label: ganon_report_mincount
+    label: "ganon_report_mincount"
     widget: number_field
     value: 0
     step: 1
     help: "Specify a minimum number of reads a hit must have to be retained in the ganon report."
 
   ganon_report_maxcount:
-    label: ganon_report_maxcount
+    label: "ganon_report_maxcount"
     widget: number_field
     value: 0
     step: 1
     help: "Specify a maximum number of reads a hit must have to be retained in the ganon report."
 
   postprocessing_and_visualisation_options:
-    label: Postprocessing and visualisation options
+    label: "Postprocessing and visualisation options"
     widget: 'check_box'
     html_options:
       data:
@@ -886,7 +886,7 @@ attributes:
         hide-taxpasta_ignore_errors-when-un-checked: true
 
   run_profile_standardisation:
-    label: run_profile_standardisation
+    label: "run_profile_standardisation"
     widget: select
     options:
       - ['false', 'false']
@@ -894,7 +894,7 @@ attributes:
     help: "Turn on standardisation of taxon tables across profilers"
 
   standardisation_motus_generatebiom:
-    label: standardisation_motus_generatebiom
+    label: "standardisation_motus_generatebiom"
     widget: select
     options:
       - ['false', 'false']
@@ -902,7 +902,7 @@ attributes:
     help: "Turn on generation of BIOM output (currently only applies to mOTUs)"
 
   run_krona:
-    label: run_krona
+    label: "run_krona"
     widget: select
     options:
       - ['false', 'false']
@@ -910,12 +910,12 @@ attributes:
     help: "Turn on generation of Krona plots for supported profilers"
 
   krona_taxonomy_directory:
-    label: krona_taxonomy_directory
+    label: "krona_taxonomy_directory"
     widget: text_field
     help: "Specify path to krona taxonomy directories (required for MALT krona plots)"
 
   standardisation_taxpasta_format:
-    label: standardisation_taxpasta_format
+    label: "standardisation_taxpasta_format"
     widget: select
     options:
       - ['tsv', 'tsv']
@@ -926,12 +926,12 @@ attributes:
     help: "The desired output format."
 
   taxpasta_taxonomy_dir:
-    label: taxpasta_taxonomy_dir
+    label: "taxpasta_taxonomy_dir"
     widget: text_field
     help: "The path to a directory containing taxdump files."
 
   taxpasta_add_name:
-    label: taxpasta_add_name
+    label: "taxpasta_add_name"
     widget: select
     options:
       - ['false', 'false']
@@ -939,7 +939,7 @@ attributes:
     help: "Add the taxon name to the output. Requires --taxpasta_taxonomy_dir."
 
   taxpasta_add_rank:
-    label: taxpasta_add_rank
+    label: "taxpasta_add_rank"
     widget: select
     options:
       - ['false', 'false']
@@ -947,7 +947,7 @@ attributes:
     help: "Add the taxon rank to the output. Requires --taxpasta_taxonomy_dir."
 
   taxpasta_add_lineage:
-    label: taxpasta_add_lineage
+    label: "taxpasta_add_lineage"
     widget: select
     options:
       - ['false', 'false']
@@ -955,7 +955,7 @@ attributes:
     help: "Add the taxon's entire name lineage to the output. Requires --taxpasta_taxonomy_dir."
 
   taxpasta_add_idlineage:
-    label: taxpasta_add_idlineage
+    label: "taxpasta_add_idlineage"
     widget: select
     options:
       - ['false', 'false']
@@ -963,7 +963,7 @@ attributes:
     help: "Add the taxon's entire ID lineage to the output. Requires --taxpasta_taxonomy_dir."
 
   taxpasta_add_ranklineage:
-    label: taxpasta_add_ranklineage
+    label: "taxpasta_add_ranklineage"
     widget: select
     options:
       - ['false', 'false']
@@ -971,7 +971,7 @@ attributes:
     help: "Add the taxon's entire rank lineage to the output. Requires --taxpasta_taxonomy_dir."
 
   taxpasta_ignore_errors:
-    label: taxpasta_ignore_errors
+    label: "taxpasta_ignore_errors"
     widget: select
     options:
       - ['false', 'false']
@@ -983,7 +983,7 @@ form:
   - bc_num_hours
   - executor
   - partition
-  - num_core
+  - num_cores
   - num_memory
   - workdir
   - input_output_options

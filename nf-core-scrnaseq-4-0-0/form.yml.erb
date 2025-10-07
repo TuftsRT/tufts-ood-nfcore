@@ -13,7 +13,7 @@ attributes:
     - [
         "slurm", "slurm",
         data-hide-partition: true,
-        data-hide-num-core: true,
+        data-hide-num-cores: true,
         data-hide-num-memory: true
       ]
     - ["local", "local"]
@@ -47,7 +47,7 @@ attributes:
 
 
   input_output_options:
-    label: Input/output options
+    label: "Input/output options"
     widget: 'check_box'
     html_options:
       data:
@@ -57,7 +57,7 @@ attributes:
     help: "Define where the pipeline should find input data and save output data."
 
   input:
-    label: input
+    label: "input"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -66,7 +66,7 @@ attributes:
     help: "Path to comma-separated file containing information about the samples in the experiment."
 
   outdir:
-    label: outdir
+    label: "outdir"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -75,12 +75,12 @@ attributes:
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
-    label: multiqc_title
+    label: "multiqc_title"
     widget: text_field
     help: "MultiQC report title. Printed as page header, used for filename if not otherwise specified."
 
   mandatory_arguments:
-    label: Mandatory arguments
+    label: "Mandatory arguments"
     widget: 'check_box'
     html_options:
       data:
@@ -89,7 +89,7 @@ attributes:
         hide-protocol-when-un-checked: true
 
   barcode_whitelist:
-    label: barcode_whitelist
+    label: "barcode_whitelist"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -98,7 +98,7 @@ attributes:
     help: "If not using the 10X Genomics platform, a custom barcode whitelist can be used with `--barcode_whitelist`."
 
   aligner:
-    label: aligner
+    label: "aligner"
     widget: select
     options:
       - ['simpleaf', 'simpleaf']
@@ -110,15 +110,13 @@ attributes:
     help: "Name of the tool to use for scRNA (pseudo-) alignment."
 
   protocol:
-    label: protocol
+    label: "protocol"
     widget: text_field
     value: "auto"
-    help: "The protocol that was used to generate the single cell data, e.g. 10x Genomics v2 Chemistry.
-
- Can be `auto` (cellranger only), `10XV1`, `10XV2`, `10XV3`, `10XV4`, or any other protocol string that will get directly passed the respective aligner."
+    help: "The protocol that was used to generate the single cell data, e.g. 10x Genomics v2 Chemistry."
 
   skip_tools:
-    label: Skip Tools
+    label: "Skip Tools"
     widget: 'check_box'
     html_options:
       data:
@@ -129,7 +127,7 @@ attributes:
     help: "This section can be used to  disable certain tools in the pipeline"
 
   skip_multiqc:
-    label: skip_multiqc
+    label: "skip_multiqc"
     widget: select
     options:
       - ['false', 'false']
@@ -137,7 +135,7 @@ attributes:
     help: "Skip MultiQC Report"
 
   skip_fastqc:
-    label: skip_fastqc
+    label: "skip_fastqc"
     widget: select
     options:
       - ['false', 'false']
@@ -145,7 +143,7 @@ attributes:
     help: "Skip FastQC"
 
   skip_cellbender:
-    label: skip_cellbender
+    label: "skip_cellbender"
     widget: select
     options:
       - ['false', 'false']
@@ -153,14 +151,14 @@ attributes:
     help: "Skip cellbender empty drops filter subworkflow"
 
   skip_emptydrops:
-    label: skip_emptydrops
+    label: "skip_emptydrops"
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
 
   reference_genome_options:
-    label: Reference genome options
+    label: "Reference genome options"
     widget: 'check_box'
     html_options:
       data:
@@ -172,7 +170,7 @@ attributes:
         hide-save_reference-when-un-checked: true
         hide-save_align_intermeds-when-un-checked: true
         hide-igenomes_base-when-un-checked: true
-        hide-txptogene-when-un-checked: true
+        hide-txpgene2-when-un-checked: true
     help: "Reference genome related files and options required for the workflow."
 
   genome:
@@ -222,7 +220,7 @@ attributes:
     help: "Name of iGenomes reference."
 
   fasta:
-    label: fasta
+    label: "fasta"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -231,7 +229,7 @@ attributes:
     help: "Path to FASTA genome file."
 
   transcript_fasta:
-    label: transcript_fasta
+    label: "transcript_fasta"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -240,7 +238,7 @@ attributes:
     help: "A cDNA FASTA file"
 
   gtf:
-    label: gtf
+    label: "gtf"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -249,7 +247,7 @@ attributes:
     help: "Reference GTF annotation file"
 
   save_reference:
-    label: save_reference
+    label: "save_reference"
     widget: select
     options:
       - ['false', 'false']
@@ -257,15 +255,15 @@ attributes:
     help: "Specify this parameter to save the indices created (STAR, Kallisto, Simpleaf) to the results."
 
   save_align_intermeds:
-    label: save_align_intermeds
+    label: "save_align_intermeds"
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
     help: "Specify this parameter to save the intermediate alignment files (STAR, CellRanger) to the results."
 
-  txptogene:
-    label: txp2gene
+  txpgene2:
+    label: "txp2gene"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -274,7 +272,7 @@ attributes:
     help: "Path to transcript to gene mapping file. This allows the specification of a transcript to gene mapping file for Kallisto/BUS and Alevin-fry with AlevinQC."
 
   simpleaf_options:
-    label: Simpleaf Options
+    label: "Simpleaf Options"
     widget: 'check_box'
     html_options:
       data:
@@ -282,7 +280,7 @@ attributes:
         hide-simpleaf_umi_resolution-when-un-checked: true
 
   simpleaf_index:
-    label: simpleaf_index
+    label: "simpleaf_index"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -291,7 +289,7 @@ attributes:
     help: "Path to pre-built Simpleaf index."
 
   simpleaf_umi_resolution:
-    label: simpleaf_umi_resolution
+    label: "simpleaf_umi_resolution"
     widget: select
     options:
       - ['cr-like', 'cr-like']
@@ -303,7 +301,7 @@ attributes:
     help: "UMI resolution strategy to deduplicate UMIs."
 
   starsolo_options:
-    label: STARSolo Options
+    label: "STARSolo Options"
     widget: 'check_box'
     html_options:
       data:
@@ -313,7 +311,7 @@ attributes:
         hide-star_feature-when-un-checked: true
 
   star_index:
-    label: star_index
+    label: "star_index"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -322,17 +320,17 @@ attributes:
     help: "Specify a path to the precomputed STAR index."
 
   star_ignore_sjdbgtf:
-    label: star_ignore_sjdbgtf
+    label: "star_ignore_sjdbgtf"
     widget: text_field
     help: "Ignore the SJDB GTF file."
 
   seq_center:
-    label: seq_center
+    label: "seq_center"
     widget: text_field
     help: "Name of sequencing center for BAM read group tag."
 
   star_feature:
-    label: star_feature
+    label: "star_feature"
     widget: select
     options:
       - ['Gene', 'Gene']
@@ -341,18 +339,18 @@ attributes:
     help: "Quantification type of different transcriptomic feature. Use `GeneFull` on pre-mRNA count for single-nucleus RNA-seq reads. Use `Gene Velocyto` to generate RNA velocity matrix."
 
   kallisto_bus_options:
-    label: Kallisto/BUS Options
+    label: "Kallisto/BUS Options"
     widget: 'check_box'
     html_options:
       data:
         hide-kallisto_index-when-un-checked: true
-        hide-kb-tc1-when-un-checked: true
-        hide-kb-tc2-when-un-checked: true
-        hide-kb-workflow-when-un-checked: true
+        hide-kb_tc1-when-un-checked: true
+        hide-kb_tc2-when-un-checked: true
+        hide-kb_workflow-when-un-checked: true
     help: "Params related to Kallisto/BUS tool"
 
   kallisto_index:
-    label: kallisto_index
+    label: "kallisto_index"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -361,7 +359,7 @@ attributes:
     help: "Specify a path to the precomputed Kallisto index."
 
   kb_tc1:
-    label: kb_t1c
+    label: "kb_t1c"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -370,7 +368,7 @@ attributes:
     help: "Specify a path to the cDNA transcripts-to-capture."
 
   kb_tc2:
-    label: kb_t2c
+    label: "kb_t2c"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -379,7 +377,7 @@ attributes:
     help: "Specify a path to the intron transcripts-to-capture."
 
   kb_workflow:
-    label: kb_workflow
+    label: "kb_workflow"
     widget: select
     options:
       - ['standard', 'standard']
@@ -388,7 +386,7 @@ attributes:
     help: "Type of workflow. Use `nac` for an index type that can quantify nascent and mature RNA. Use `lamanno` for RNA velocity based on La Manno et al. 2018 logic. (default: standard)"
 
   cellranger_options:
-    label: Cellranger Options
+    label: "Cellranger Options"
     widget: 'check_box'
     html_options:
       data:
@@ -397,7 +395,7 @@ attributes:
     help: "Params related to the Cellranger pipeline"
 
   cellranger_index:
-    label: cellranger_index
+    label: "cellranger_index"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -406,7 +404,7 @@ attributes:
     help: "Specify a pre-calculated cellranger index. Readily prepared indexes can be obtained from the 10x Genomics website. "
 
   skip_cellranger_renaming:
-    label: skip_cellranger_renaming
+    label: "skip_cellranger_renaming"
     widget: select
     options:
       - ['false', 'false']
@@ -414,7 +412,7 @@ attributes:
     help: "Should it skip the automatic renaming included in cellranger-related modules?"
 
   cellrangerarc_options:
-    label: Cellranger ARC Options
+    label: "Cellranger ARC Options"
     widget: 'check_box'
     html_options:
       data:
@@ -424,22 +422,22 @@ attributes:
     help: "Params related to the Cellranger pipeline"
 
   motifs:
-    label: motifs
+    label: "motifs"
     widget: text_field
     help: "Specify a motif file to create a cellranger-arc index. Can be taken, e.g., from the JASPAR database."
 
   cellrangerarc_config:
-    label: cellrangerarc_config
+    label: "cellrangerarc_config"
     widget: text_field
     help: "Specify a config file to create the cellranger-arc index."
 
   cellrangerarc_reference:
-    label: cellrangerarc_reference
+    label: "cellrangerarc_reference"
     widget: text_field
     help: "Specify the genome reference name used in the config file to create a cellranger-arc index."
 
   cellranger_multi_options:
-    label: Cellranger Multi options
+    label: "Cellranger Multi options"
     widget: 'check_box'
     html_options:
       data:
@@ -454,7 +452,7 @@ attributes:
         hide-cellranger_multi_barcodes-when-un-checked: true
 
   cellranger_vdj_index:
-    label: cellranger_vdj_index
+    label: "cellranger_vdj_index"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -463,7 +461,7 @@ attributes:
     help: "Specify a pre-built Cell Ranger index for VDJ analysis."
 
   skip_cellrangermulti_vdjref:
-    label: skip_cellrangermulti_vdjref
+    label: "skip_cellrangermulti_vdjref"
     widget: select
     options:
       - ['false', 'false']
@@ -471,7 +469,7 @@ attributes:
     help: "Skip mkvdjref if not using VDJ data with cellranger/multi"
 
   gex_frna_probe_set:
-    label: gex_frna_probe_set
+    label: "gex_frna_probe_set"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -480,7 +478,7 @@ attributes:
     help: "Provide a probe set for fixed RNA-seq profiling (used with FFPE samples). Please refer to the [10x documentation about probesets](https://www.10xgenomics.com/support/single-cell-gene-expression-flex/documentation/steps/probe-sets/chromium-frp-probe-set-files) for more details."
 
   gex_target_panel:
-    label: gex_target_panel
+    label: "gex_target_panel"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -489,7 +487,7 @@ attributes:
     help: "Provide a panel description for targeted sequencing."
 
   gex_cmo_set:
-    label: gex_cmo_set
+    label: "gex_cmo_set"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -498,7 +496,7 @@ attributes:
     help: "Provide a Cell Multiplexing Oligo (CMO) description file when working with multiplexed samples. This is only necessary if you with to override Cell Ranger's default CMO-set. Please refer to the [10x documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi#cmo-ref) about CMO references for more details."
 
   fb_reference:
-    label: fb_reference
+    label: "fb_reference"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -507,7 +505,7 @@ attributes:
     help: "Provide a reference file for feature barcoding (e.g. antibody measurements). Please refer to the [Cell Ranger Feature Reference documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-feature-ref-csv) for more details."
 
   vdj_inner_enrichment_primers:
-    label: vdj_inner_enrichment_primers
+    label: "vdj_inner_enrichment_primers"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -516,7 +514,7 @@ attributes:
     help: "This argument takes a .txt file containing primer sequences that were used to enrich cDNA for V(D)J sequences. This is only necessary if you with to override Cell Ranger's defaults."
 
   gex_barcode_sample_assignment:
-    label: gex_barcode_sample_assignment
+    label: "gex_barcode_sample_assignment"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -525,7 +523,7 @@ attributes:
     help: "This is only necessary to override Cell Ranger's default cell calling and tag calling steps. In most cases you need to only use the `cellranger_multi_barcodes` parameter. Please refer to the [10x documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi#barcode-asst) for more information about this file."
 
   cellranger_multi_barcodes:
-    label: cellranger_multi_barcodes
+    label: "cellranger_multi_barcodes"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
@@ -538,7 +536,7 @@ form:
   - bc_num_hours
   - executor
   - partition
-  - num_core
+  - num_cores
   - num_memory
   - workdir
   - input_output_options
@@ -561,7 +559,7 @@ form:
   - gtf
   - save_reference
   - save_align_intermeds
-  - txptogene
+  - txpgene2
   - simpleaf_options
   - simpleaf_index
   - simpleaf_umi_resolution

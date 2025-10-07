@@ -19,7 +19,7 @@ script:
     - "2"
     <%- elsif executor == "local" -%>
     - "-n"
-    - "<%= num_core %>"
+    - "<%= num_cores %>"
     - "--mem"
     - "<%= num_memory %>"
     - "-p"

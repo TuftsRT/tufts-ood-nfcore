@@ -225,3 +225,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+$(document).ready(function() {
+  // 1. Find ALL links in the sidebar that contain "nf-core" in their URL
+  // The *= operator means "contains"
+  var nfCoreLinks = $('a[href*="nf-core"]');
+
+  // 2. Iterate through every matching link found
+  nfCoreLinks.each(function() {
+    var $link = $(this);
+
+    // Dispose of the popover logic so hovering stops triggering code
+    // (Wrapped in try/catch in case the popover isn't fully initialized yet)
+    try {
+      $link.popover('dispose');
+    } catch(e) {}
+
+    // 3. Strip all Bootstrap attributes that cause the popup
+    $link.removeAttr('data-bs-toggle');
+    $link.removeAttr('data-bs-trigger');
+    $link.removeAttr('data-bs-content');
+    $link.removeAttr('data-bs-original-title');
+    $link.removeAttr('title'); // Removes the small tooltip as well
+  });
+});

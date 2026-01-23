@@ -1,6 +1,21 @@
 ---
 cluster: "pax"
 
+form_header: |
+  <div style="text-align: center; margin-bottom: 20px;">
+    <img src="https://raw.githubusercontent.com/nf-core/chipseq/2.1.0//docs/images/nf-core-chipseq_metro_map_grey.png"
+         alt="nf-core-chipseq" 
+         style="max-width: 600px; height: auto; margin-bottom: 10px;">
+  </div>
+
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
+  This app automatically saves your form inputs between sessions.<br>
+  To restore settings to <strong>default values</strong>, run the following command in terminal:
+  <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-chipseq-2-1-0.json</code></pre>
+  </div>
+
+
+
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/num_cores_generic.yml").indent(2) %>

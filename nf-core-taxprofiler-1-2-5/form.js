@@ -188,6 +188,13 @@ const iconMap = {
   "Binning options": "fa fa-fw me-2 fas fa-cubes svelte-1jrxhr2",
   "Bin quality check options": "fa fa-fw me-2 fas fa-thumbs-up svelte-1jrxhr2",
   "Ancient DNA assembly": "fa fa-fw me-2 fas fa-landmark svelte-1jrxhr2",
+  "Quality check parameters":
+    "fa fa-fw me-2 fas fa-check-circle svelte-1jrxhr2",
+      "Clustering parameters":
+    "fa fa-fw me-2 fas fa-project-diagram svelte-1jrxhr2",
+    "Alignment parameters": "fa fa-fw me-2 fas fa-braille svelte-1jrxhr2",
+    "Redundancy removal parameters": "fa fa-fw me-2 fas fa-filter svelte-1jrxhr2"
+
 };
 
 // Create a lowercase version of the iconMap automatically
@@ -216,29 +223,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
       label.prepend(icon);
     }
-  });
-});
-
-$(document).ready(function() {
-  // 1. Find ALL links in the sidebar that contain "nf-core" in their URL
-  // The *= operator means "contains"
-  var nfCoreLinks = $('a[href*="nf-core"]');
-
-  // 2. Iterate through every matching link found
-  nfCoreLinks.each(function() {
-    var $link = $(this);
-
-    // Dispose of the popover logic so hovering stops triggering code
-    // (Wrapped in try/catch in case the popover isn't fully initialized yet)
-    try {
-      $link.popover('dispose');
-    } catch(e) {}
-
-    // 3. Strip all Bootstrap attributes that cause the popup
-    $link.removeAttr('data-bs-toggle');
-    $link.removeAttr('data-bs-trigger');
-    $link.removeAttr('data-bs-content');
-    $link.removeAttr('data-bs-original-title');
-    $link.removeAttr('title'); // Removes the small tooltip as well
   });
 });

@@ -1,5 +1,17 @@
 ---
 cluster: "pax"
+form_header: |
+  <div style="text-align: center; margin-bottom: 20px;">
+    <img src="https://raw.githubusercontent.com/nf-core/taxprofiler/1.2.5//docs/images/taxprofiler_tube.png"
+         alt="nf-core-taxprofiler"
+         style="max-width: 600px; height: auto; margin-bottom: 10px;">
+  </div>
+
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
+  This app automatically saves your form inputs between sessions.<br>
+  To restore settings to <strong>default values</strong>, run the following command in terminal:
+  <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/nf-core-taxprofiler-1-2-5.json</code></pre>
+  </div>
 
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
@@ -64,7 +76,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing information about the samples and libraries/runs."
 
   databases:
@@ -73,7 +85,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing information about databases and profiling parameters for each taxonomic profiler"
 
   save_untarred_databases:
@@ -90,7 +102,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -452,7 +464,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify path to single reference FASTA of host(s) genome(s)"
 
   shortread_hostremoval_index:
@@ -461,7 +473,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify path to the directory containing pre-made BowTie2 indexes of the host removal reference"
 
   longread_hostremoval_index:
@@ -470,7 +482,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify path to a pre-made Minimap2 index file (.mmi) of the host removal reference"
 
   save_hostremoval_index:
@@ -551,6 +563,7 @@ attributes:
         hide-malt_save_reads-when-un-checked: true
         hide-malt_generate_megansummary-when-un-checked: true
         hide-run_metaphlan-when-un-checked: true
+        hide-metaphlan_save_samfiles-when-un-checked: true
         hide-run_motus-when-un-checked: true
         hide-motus_use_relative_abundance-when-un-checked: true
         hide-motus_save_mgc_read_counts-when-un-checked: true
@@ -764,6 +777,14 @@ attributes:
       - ['false', 'false']
       - ['true', 'true']
     help: "Turn on profiling with MetaPhlAn. Requires database to be present CSV file passed to --databases"
+
+  metaphlan_save_samfiles:
+    label: "metaphlan_save_samfiles"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Turn on saving of MetaPhlAn reads aligned against marker genes in SAM format"
 
   run_motus:
     label: "run_motus"
@@ -1067,6 +1088,7 @@ form:
   - malt_save_reads
   - malt_generate_megansummary
   - run_metaphlan
+  - metaphlan_save_samfiles
   - run_motus
   - motus_use_relative_abundance
   - motus_save_mgc_read_counts
@@ -1093,5 +1115,6 @@ form:
   - taxpasta_add_idlineage
   - taxpasta_add_ranklineage
   - taxpasta_ignore_errors
+
   - tower_access_token
   - resume

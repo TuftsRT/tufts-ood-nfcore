@@ -1,0 +1,7 @@
+---
+name: rnaseq 3.22.2
+category: nf-core pipelines
+subcategory: rnaseq
+role: batch_connect
+description: |
+  This app will launch the [rnaseq](https://nf-co.re/rnaseq) pipeline developed by nf-core community. 

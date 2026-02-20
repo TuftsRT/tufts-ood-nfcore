@@ -1,0 +1,7 @@
+---
+name: ampliseq 2.16.1
+category: ""
+subcategory: metagenomics
+role: batch_connect
+description: |
+  This app will launch the [ampliseq](https://nf-co.re/ampliseq) pipeline developed by nf-core community. 

@@ -1,6 +1,6 @@
 ---
 name: denovotranscript 1.2.1
-category: nf-core pipelines
+category: "nf-core pipelines"
 subcategory: rnaseq
 role: batch_connect
 description: |

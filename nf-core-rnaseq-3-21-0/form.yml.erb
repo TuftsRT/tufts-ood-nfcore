@@ -1,18 +1,16 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/rnaseq/3.21.0/docs/images/nf-core-rnaseq_metro_map_grey_animated.svg" 
-         alt="nf-core-rnaseq" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/rnaseq\/3.22.2\/\/docs\/images\/nf-core-rnaseq_metro_map_grey_animated.svg"
+         alt="nf-core-rnaseq"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-rnaseq-3-21-0.json</code></pre>
-  
   </div>
 
 attributes:
@@ -59,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -76,7 +73,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to the sample sheet (CSV) containing metadata about the experimental samples."
 
   outdir:
@@ -85,7 +82,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -122,49 +119,8 @@ attributes:
     help: "Reference genome related files and options required for the workflow."
 
   genome:
-    label: iGenomes
-    widget: select
-    required: false
-    options:
-      - ['None', ' ']
-      - ['GRCh37', 'GRCh37']
-      - ['GRCh38', 'GRCh38']
-      - ['GRCm38', 'GRCm38']
-      - ['TAIR10', 'TAIR10']
-      - ['EB2', 'EB2']
-      - ['UMD3.1', 'UMD3.1']
-      - ['WBcel235', 'WBcel235']
-      - ['CanFam3.1', 'CanFam3.1']
-      - ['GRCz10', 'GRCz10']
-      - ['BDGP6', 'BDGP6']
-      - ['EquCab2', 'EquCab2']
-      - ['EB1', 'EB1']
-      - ['Galgal4', 'Galgal4']
-      - ['Gm01', 'Gm01']
-      - ['Mmul_1', 'Mmul_1']
-      - ['IRGSP-1.0', 'IRGSP-1.0']
-      - ['CHIMP2.1.4', 'CHIMP2.1.4']
-      - ['Rnor_5.0', 'Rnor_5.0']
-      - ['Rnor_6.0', 'Rnor_6.0']
-      - ['R64-1-1', 'R64-1-1']
-      - ['EF2', 'EF2']
-      - ['Sbi1', 'Sbi1']
-      - ['Sscrofa10.2', 'Sscrofa10.2']
-      - ['AGPv3', 'AGPv3']
-      - ['hg38', 'hg38']
-      - ['hg19', 'hg19']
-      - ['mm10', 'mm10']
-      - ['bosTau8', 'bosTau8']
-      - ['ce10', 'ce10']
-      - ['canFam3', 'canFam3']
-      - ['danRer10', 'danRer10']
-      - ['dm6', 'dm6']
-      - ['equCab2', 'equCab2']
-      - ['galGal4', 'galGal4']
-      - ['panTro4', 'panTro4']
-      - ['rn6', 'rn6']
-      - ['sacCer3', 'sacCer3']
-      - ['susScr3', 'susScr3']
+    label: "genome"
+    widget: text_field
     help: "Name of iGenomes reference."
 
   fasta:
@@ -173,7 +129,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA genome file."
 
   gtf:
@@ -182,7 +138,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to GTF annotation file."
 
   gff:
@@ -191,7 +147,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to GFF3 annotation file."
 
   gene_bed:
@@ -200,7 +156,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to BED file containing gene intervals. This will be created from the GTF file if not specified."
 
   transcript_fasta:
@@ -209,7 +165,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA transcriptome file."
 
   additional_fasta:
@@ -218,7 +174,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "FASTA file to concatenate to genome FASTA file e.g. containing spike-in sequences."
 
   splicesites:
@@ -227,7 +183,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Splice sites file required for HISAT2."
 
   star_index:
@@ -236,7 +192,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built STAR index."
 
   hisat2_index:
@@ -245,7 +201,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built HISAT2 index."
 
   rsem_index:
@@ -254,7 +210,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built RSEM index."
 
   salmon_index:
@@ -263,7 +219,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built Salmon index."
 
   kallisto_index:
@@ -272,7 +228,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built Kallisto index."
 
   hisat2_build_memory:
@@ -312,6 +268,24 @@ attributes:
     widget: text_field
     value: "exon"
     help: "By default, the pipeline assigns reads based on the `exon` attribute within the GTF file."
+
+  igenomes_ignore:
+    label: "igenomes_ignore"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Do not load the iGenomes reference config."
+
+  igenomes_base:
+    label: "igenomes_base"
+    widget: path_selector
+    value: "s3://ngi-igenomes/igenomes/"
+    directory: /cluster/tufts
+    favorites:
+      - /cluster/tufts
+      - /cluster/home
+    help: "The base path to the igenomes reference files"
 
   read_trimming_options:
     label: "Read trimming options"
@@ -367,7 +341,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing a list of reference genomes to filter reads against with BBSplit. You have to also explicitly set `--skip_bbsplit false` if you want to use BBSplit."
 
   bbsplit_index:
@@ -376,7 +350,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built BBSplit index."
 
   sortmerna_index:
@@ -385,7 +359,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built sortmerna index."
 
   remove_ribo_rna:
@@ -399,10 +373,11 @@ attributes:
   ribo_database_manifest:
     label: "ribo_database_manifest"
     widget: path_selector
+    value: "${projectDir}/workflows/rnaseq/assets/rrna-db-defaults.txt"
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Text file containing paths to fasta files (one per line) that will be used to create the database for SortMeRNA."
 
   umi_options:
@@ -759,9 +734,10 @@ attributes:
   deseq2_vst:
     label: "deseq2_vst"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Use vst transformation instead of rlog with DESeq2."
 
   rseqc_modules:
@@ -784,7 +760,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Database when using Kraken2/Bracken for contaminant screening."
 
   bracken_precision:
@@ -846,9 +822,10 @@ attributes:
   skip_bbsplit:
     label: "skip_bbsplit"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Skip BBSplit for removal of non-reference genome reads."
 
   skip_umi_extract:
@@ -926,9 +903,10 @@ attributes:
   skip_preseq:
     label: "skip_preseq"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Skip Preseq."
 
   skip_dupradar:
@@ -1019,6 +997,8 @@ form:
   - gtf_group_features
   - featurecounts_group_type
   - featurecounts_feature_type
+  - igenomes_ignore
+  - igenomes_base
   - read_trimming_options
   - trimmer
   - extra_trimgalore_args
@@ -1097,5 +1077,6 @@ form:
   - skip_deseq2_qc
   - skip_multiqc
   - skip_qc
+
   - tower_access_token
   - resume

@@ -1,19 +1,17 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/methylseq/4.1.0//docs/images/4.0.0_metromap.png"
-         alt="nf-core-methylseq" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/methylseq\/4.2.0\/\/docs\/images\/4.2.0_metromap.png"
+         alt="nf-core-methylseq"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 10px;  margin-bottom: 20px;">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-methylseq-4-1-0.json</code></pre>
   </div>
-
 
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
@@ -59,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -76,7 +73,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing information about the samples in the experiment."
 
   outdir:
@@ -85,7 +82,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -151,49 +148,8 @@ attributes:
     help: "Options for the reference genome indices used to align reads."
 
   genome:
-    label: iGenomes
-    widget: select
-    required: false
-    options:
-      - ['None', ' ']
-      - ['GRCh37', 'GRCh37']
-      - ['GRCh38', 'GRCh38']
-      - ['GRCm38', 'GRCm38']
-      - ['TAIR10', 'TAIR10']
-      - ['EB2', 'EB2']
-      - ['UMD3.1', 'UMD3.1']
-      - ['WBcel235', 'WBcel235']
-      - ['CanFam3.1', 'CanFam3.1']
-      - ['GRCz10', 'GRCz10']
-      - ['BDGP6', 'BDGP6']
-      - ['EquCab2', 'EquCab2']
-      - ['EB1', 'EB1']
-      - ['Galgal4', 'Galgal4']
-      - ['Gm01', 'Gm01']
-      - ['Mmul_1', 'Mmul_1']
-      - ['IRGSP-1.0', 'IRGSP-1.0']
-      - ['CHIMP2.1.4', 'CHIMP2.1.4']
-      - ['Rnor_5.0', 'Rnor_5.0']
-      - ['Rnor_6.0', 'Rnor_6.0']
-      - ['R64-1-1', 'R64-1-1']
-      - ['EF2', 'EF2']
-      - ['Sbi1', 'Sbi1']
-      - ['Sscrofa10.2', 'Sscrofa10.2']
-      - ['AGPv3', 'AGPv3']
-      - ['hg38', 'hg38']
-      - ['hg19', 'hg19']
-      - ['mm10', 'mm10']
-      - ['bosTau8', 'bosTau8']
-      - ['ce10', 'ce10']
-      - ['canFam3', 'canFam3']
-      - ['danRer10', 'danRer10']
-      - ['dm6', 'dm6']
-      - ['equCab2', 'equCab2']
-      - ['galGal4', 'galGal4']
-      - ['panTro4', 'panTro4']
-      - ['rn6', 'rn6']
-      - ['sacCer3', 'sacCer3']
-      - ['susScr3', 'susScr3']
+    label: "genome"
+    widget: text_field
     help: "Name of iGenomes reference."
 
   fasta:
@@ -202,7 +158,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA genome file"
 
   fasta_index:
@@ -211,7 +167,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Fasta index file."
 
   bismark_index:
@@ -220,7 +176,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to a directory containing a Bismark reference index."
 
   bwameth_index:
@@ -229,8 +185,26 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "bwameth index filename base"
+
+  igenomes_ignore:
+    label: "igenomes_ignore"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Do not load the iGenomes reference config."
+
+  igenomes_base:
+    label: "igenomes_base"
+    widget: path_selector
+    value: "s3://ngi-igenomes/igenomes/"
+    directory: /cluster/tufts
+    favorites:
+      - /cluster/tufts
+      - /cluster/home
+    help: "The base path to the igenomes reference files"
 
   alignment_options:
     label: "Alignment options"
@@ -252,6 +226,7 @@ attributes:
   use_mem2:
     label: "use_mem2"
     widget: select
+    value: false
     options:
       - ['false', 'false']
       - ['true', 'true']
@@ -385,6 +360,7 @@ attributes:
   skip_trimming_presets:
     label: "skip_trimming_presets"
     widget: select
+    value: false
     options:
       - ['false', 'false']
       - ['true', 'true']
@@ -403,8 +379,8 @@ attributes:
         hide-no_overlap-when-un-checked: true
         hide-ignore_r1-when-un-checked: true
         hide-ignore_r2-when-un-checked: true
-        hide-ignore_prime3_r1-when-un-checked: true
-        hide-ignore_prime3_r2-when-un-checked: true
+        hide-ignoreprime3_r1-when-un-checked: true
+        hide-ignoreprime3_r2-when-un-checked: true
         hide-known_splices-when-un-checked: true
         hide-local_alignment-when-un-checked: true
         hide-minins-when-un-checked: true
@@ -453,9 +429,10 @@ attributes:
   no_overlap:
     label: "no_overlap"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Ignore read 2 methylation when it overlaps read 1"
 
   ignore_r1:
@@ -472,14 +449,14 @@ attributes:
     step: 1
     help: "Ignore methylation in first n bases of 5` end of R2"
 
-  ignore_prime3_r1:
+  ignoreprime3_r1:
     label: "ignore_3prime_r1"
     widget: number_field
     value: 0
     step: 1
     help: "Ignore methylation in last n bases of 3` end of R1"
 
-  ignore_prime3_r2:
+  ignoreprime3_r2:
     label: "ignore_3prime_r2"
     widget: number_field
     value: 2
@@ -492,7 +469,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Supply a .gtf file containing known splice sites (bismark_hisat only)."
 
   local_alignment:
@@ -595,7 +572,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "A GFF or BED file containing the target regions which will be passed to Qualimap/Bamqc."
 
   targeted_sequencing_analysis_options:
@@ -613,7 +590,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "A BED file containing the target regions"
 
   collecthsmetrics:
@@ -722,6 +699,8 @@ form:
   - fasta_index
   - bismark_index
   - bwameth_index
+  - igenomes_ignore
+  - igenomes_base
   - alignment_options
   - aligner
   - use_mem2
@@ -750,8 +729,8 @@ form:
   - no_overlap
   - ignore_r1
   - ignore_r2
-  - ignore_prime3_r1
-  - ignore_prime3_r2
+  - ignoreprime3_r1
+  - ignoreprime3_r2
   - known_splices
   - local_alignment
   - minins
@@ -778,5 +757,6 @@ form:
   - run_preseq
   - run_qualimap
   - run_targeted_sequencing
+
   - tower_access_token
   - resume

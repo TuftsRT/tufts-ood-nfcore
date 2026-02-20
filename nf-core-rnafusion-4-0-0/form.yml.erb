@@ -1,14 +1,13 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/rnafusion/4.0.0//docs/images/nf-core-rnafusion_metro_map.png"
-         alt="nf-core-rnafusion" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/rnafusion\/3.0.1b\/\/docs\/images\/nf-core-rnafusion_metro_map.png"
+         alt="nf-core-rnafusion"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-rnafusion-4-0-0.json</code></pre>
@@ -56,7 +55,6 @@ attributes:
     required: false
     label: "TOWER_ACCESS_TOKEN (Optional)"
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
-
 
 
   skip_steps:
@@ -144,7 +142,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to samplesheet file containing information about the samples in the experiment."
 
   outdir:
@@ -153,7 +151,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -208,7 +206,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to arriba reference blacklist"
 
   arriba_ref_cytobands:
@@ -217,7 +215,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to arriba reference cytobands"
 
   arriba_ref_known_fusions:
@@ -226,7 +224,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to arriba reference known fusions"
 
   arriba_ref_protein_domains:
@@ -235,7 +233,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to arriba reference protein domain"
 
   arriba_fusions:
@@ -244,7 +242,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to arriba output"
 
   fusioncatcher_fusions:
@@ -253,7 +251,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to fusioncatcher output"
 
   fusioncatcher_limitsjdbinsertnsj:
@@ -269,7 +267,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to fusioncatcher references"
 
   fusioninspector_limitsjdbinsertnsj:
@@ -285,7 +283,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to a fusion list file built with format GENE1--GENE2"
 
   fusionreport_ref:
@@ -294,7 +292,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to fusionreport references"
 
   hgnc_ref:
@@ -303,7 +301,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to HGNC database file"
 
   hgnc_date:
@@ -312,7 +310,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to HGNC timestamp file for database retrieval"
 
   qiagen:
@@ -329,7 +327,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to salmon index"
 
   starfusion_fusions:
@@ -338,7 +336,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to starfusion output"
 
   starfusion_ref:
@@ -347,16 +345,17 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to starfusion references"
 
   ctatsplicing_cancer_introns:
     label: "ctatsplicing_cancer_introns"
     widget: path_selector
+    value: "https://data.broadinstitute.org/Trinity/CTAT_RESOURCE_LIB/CANCER_SPLICING_LIB_SUPPLEMENT/cancer_introns.GRCh38.Jun232020.tsv.gz"
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to the cancer introns CSV file to create the CTAT-SPLICING reference with"
 
   dfam_hmm:
@@ -365,7 +364,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Dfam HMM database file"
 
   dfam_hf3:
@@ -374,7 +373,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Dfam H3F database file"
 
   dfam_hi3:
@@ -383,7 +382,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Dfam H3I database file"
 
   dfam_hm3:
@@ -392,7 +391,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Dfam H3M database file"
 
   dfam_hp3:
@@ -401,7 +400,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Dfam H3P database file"
 
   pfam_file:
@@ -410,7 +409,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Pfam database file"
 
   annot_filter_url:
@@ -425,7 +424,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to starindex references"
 
   tools_cutoff:
@@ -441,7 +440,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to fusions to add to the input of fusioninspector"
 
   read_trimming_options:
@@ -475,7 +474,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to adapter fasta file: default: []"
 
   save_trimmed_fail:
@@ -550,7 +549,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA genome file."
 
   fai:
@@ -559,53 +558,12 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA genome index file."
 
   genome:
-    label: iGenomes
-    widget: select
-    required: false
-    options:
-      - ['None', ' ']
-      - ['GRCh37', 'GRCh37']
-      - ['GRCh38', 'GRCh38']
-      - ['GRCm38', 'GRCm38']
-      - ['TAIR10', 'TAIR10']
-      - ['EB2', 'EB2']
-      - ['UMD3.1', 'UMD3.1']
-      - ['WBcel235', 'WBcel235']
-      - ['CanFam3.1', 'CanFam3.1']
-      - ['GRCz10', 'GRCz10']
-      - ['BDGP6', 'BDGP6']
-      - ['EquCab2', 'EquCab2']
-      - ['EB1', 'EB1']
-      - ['Galgal4', 'Galgal4']
-      - ['Gm01', 'Gm01']
-      - ['Mmul_1', 'Mmul_1']
-      - ['IRGSP-1.0', 'IRGSP-1.0']
-      - ['CHIMP2.1.4', 'CHIMP2.1.4']
-      - ['Rnor_5.0', 'Rnor_5.0']
-      - ['Rnor_6.0', 'Rnor_6.0']
-      - ['R64-1-1', 'R64-1-1']
-      - ['EF2', 'EF2']
-      - ['Sbi1', 'Sbi1']
-      - ['Sscrofa10.2', 'Sscrofa10.2']
-      - ['AGPv3', 'AGPv3']
-      - ['hg38', 'hg38']
-      - ['hg19', 'hg19']
-      - ['mm10', 'mm10']
-      - ['bosTau8', 'bosTau8']
-      - ['ce10', 'ce10']
-      - ['canFam3', 'canFam3']
-      - ['danRer10', 'danRer10']
-      - ['dm6', 'dm6']
-      - ['equCab2', 'equCab2']
-      - ['galGal4', 'galGal4']
-      - ['panTro4', 'panTro4']
-      - ['rn6', 'rn6']
-      - ['sacCer3', 'sacCer3']
-      - ['susScr3', 'susScr3']
+    label: "genome"
+    widget: text_field
     help: "Name of iGenomes reference."
 
   gtf:
@@ -614,7 +572,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to GTF genome file."
 
   refflat:
@@ -623,7 +581,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to GTF genome file."
 
   rrna_intervals:
@@ -632,7 +590,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to ribosomal interval list."
 
   no_cosmic:
@@ -649,7 +607,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to Fusion Annotation Library to be used in STARFUSION_BUILD."
 
   species:
@@ -743,5 +701,6 @@ form:
   - species
   - dfam_version
   - pfam_version
+
   - tower_access_token
   - resume

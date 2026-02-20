@@ -1,10 +1,9 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/mag/2.5.1//docs/images/mag_workflow.png"
-         alt="nf-core-mag" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/mag\/5.4.0\/\/docs\/images\/mag_metromap_light.png"
+         alt="nf-core-mag"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
@@ -13,7 +12,6 @@ form_header: |
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-mag-5-0-0.json</code></pre>
   </div>
-
 
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
@@ -59,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -78,7 +75,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "CSV samplesheet file containing information about the samples in the experiment."
 
   single_end:
@@ -95,7 +92,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Additional input CSV samplesheet containing information about pre-computed assemblies. When set, both read pre-processing and assembly are skipped and the pipeline begins at the binning stage."
 
   outdir:
@@ -104,7 +101,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -120,6 +117,24 @@ attributes:
         hide-igenomes_ignore-when-un-checked: true
         hide-igenomes_base-when-un-checked: true
     help: "Reference genome related files and options required for the workflow."
+
+  igenomes_ignore:
+    label: "igenomes_ignore"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Do not load the iGenomes reference config."
+
+  igenomes_base:
+    label: "igenomes_base"
+    widget: path_selector
+    value: "s3://ngi-igenomes/igenomes/"
+    directory: /cluster/tufts
+    favorites:
+      - /cluster/tufts
+      - /cluster/home
+    help: "The base path to the igenomes reference files"
 
   reproducibility_options:
     label: "Reproducibility options"
@@ -285,7 +300,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Fasta reference file for host contamination removal."
 
   host_fasta_bowtieindex2:
@@ -294,7 +309,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Bowtie2 index directory corresponding to `--host_fasta` reference file for host contamination removal."
 
   host_removal_verysensitive:
@@ -335,7 +350,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Genome reference used to remove Illumina PhiX contaminant reads."
 
   skip_clipping:
@@ -477,7 +492,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Genome reference used to remove ONT Lambda contaminant reads."
 
   save_lambdaremoved_reads:
@@ -550,7 +565,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Database for taxonomic classification of metagenome assembled genomes. Can be either a zipped file or a directory containing the extracted output of such."
 
   cat_db_generate:
@@ -604,10 +619,11 @@ attributes:
   gtdb_db:
     label: "gtdb_db"
     widget: path_selector
+    value: "https://data.gtdb.aau.ecogenomic.org/releases/release226/226.0/auxillary_files/gtdbtk_package/full_package/gtdbtk_r226_data.tar.gz"
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify the location of a GTDBTK database. Can be either an uncompressed directory or a `.tar.gz` archive. If not specified will be downloaded for you when GTDBTK or binning QC is not skipped."
 
   gtdbtk_min_completeness:
@@ -852,7 +868,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to either a local fasta file of protein sequences, or to a directory containing an MMseqs2-formatted database, for annotation of eukaryotic genomes."
 
   save_mmseqs_db:
@@ -887,7 +903,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Database for virus classification with geNomad"
 
   genomad_min_score:
@@ -1124,7 +1140,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Download URL, local tar.gz archive, or local uncompressed directory for an *_odb10 or *_odb12 BUSCO lineage dataset."
 
   busco_db_lineage:
@@ -1155,7 +1171,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to local folder containing already downloaded and uncompressed CheckM database."
 
   save_checkm_data:
@@ -1172,7 +1188,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to local file of an already downloaded and uncompressed CheckM2 database (.dmnd file)."
 
   checkm2_db_version:
@@ -1228,7 +1244,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify a path to a pre-downloaded GUNC dmnd database file"
 
   gunc_database_type:
@@ -1343,6 +1359,8 @@ form:
   - outdir
   - multiqc_title
   - reference_genome_options
+  - igenomes_ignore
+  - igenomes_base
   - reproducibility_options
   - megahit_fix_cpu1
   - spades_fix_cpus
@@ -1483,5 +1501,6 @@ form:
   - bcftools_view_high_variant_quality
   - bcftools_view_medium_variant_quality
   - bcftools_view_minimal_allelesupport
+
   - tower_access_token
   - resume

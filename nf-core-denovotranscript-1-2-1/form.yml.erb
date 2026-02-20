@@ -1,14 +1,10 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/denovotranscript/1.2.1//docs/images/denovotranscript_metro_map.drawio.svg"
-         alt="nf-core-denovotranscript" 
-         style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 10px;">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-denovotranscript-1-2-1.json</code></pre>
@@ -58,7 +54,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   workflow_options:
     label: "Partial run options"
     widget: 'check_box'
@@ -100,7 +95,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing information about the samples in the experiment."
 
   outdir:
@@ -109,7 +104,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   transcript_fasta:
@@ -308,7 +303,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA genome file."
 
   gtf:
@@ -350,6 +345,20 @@ attributes:
         hide-igenomes_base-when-un-checked: true
         hide-igenomes_ignore-when-un-checked: true
     help: "Reference genome related files and options required for the workflow."
+
+  igenomes_base:
+    label: "igenomes_base"
+    widget: text_field
+    value: "s3://ngi-igenomes/igenomes/"
+    help: "Directory / URL base for iGenomes references."
+
+  igenomes_ignore:
+    label: "igenomes_ignore"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Do not load the iGenomes reference config."
 
 
 form:
@@ -398,5 +407,8 @@ form:
   - salmon_options
   - lib_type
   - reference_genome_options
+  - igenomes_base
+  - igenomes_ignore
+
   - tower_access_token
   - resume

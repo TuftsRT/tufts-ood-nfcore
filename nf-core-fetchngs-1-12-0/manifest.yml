@@ -1,7 +1,7 @@
 ---
 name: fetchngs 1.12.0
-category: nf-core pipelines
-subcategory: ngs
+category: "nf-core pipelines"
+subcategory: utility
 role: batch_connect
 description: |
   This app will launch the [fetchngs](https://nf-co.re/fetchngs) pipeline developed by nf-core community. 

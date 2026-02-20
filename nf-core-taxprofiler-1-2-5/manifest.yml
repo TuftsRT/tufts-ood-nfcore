@@ -1,6 +1,6 @@
 ---
 name: taxprofiler 1.2.5
-category: nf-core pipelines
+category: "nf-core pipelines"
 subcategory: metagenomics
 role: batch_connect
 description: |

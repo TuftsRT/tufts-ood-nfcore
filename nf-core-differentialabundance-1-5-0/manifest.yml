@@ -1,6 +1,6 @@
 ---
 name: differentialabundance 1.5.0
-category: nf-core pipelines
+category: "nf-core pipelines"
 subcategory: rnaseq
 role: batch_connect
 description: |

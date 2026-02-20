@@ -1,14 +1,13 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/fetchngs/1.12.0//docs/images/nf-core-fetchngs_metro_map_grey.png" 
-         alt="nf-core-fetchngs" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/fetchngs\/1.12.0\/\/docs\/images\/nf-core-fetchngs_metro_map_grey.png"
+         alt="nf-core-fetchngs"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px;  margin-bottom: 20px;">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-fetchngs-1-12-0.json</code></pre>
@@ -58,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -81,7 +79,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "File containing SRA/ENA/GEO/DDBJ identifiers one per line to download their associated metadata and FastQ files."
 
   ena_metadata_fields:
@@ -134,7 +132,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "dbGaP repository key."
 
   outdir:
@@ -143,7 +141,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
 
@@ -164,5 +162,6 @@ form:
   - skip_fastq_download
   - dbgap_key
   - outdir
+
   - tower_access_token
   - resume

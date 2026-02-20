@@ -1,6 +1,6 @@
 ---
 name: ampliseq 2.16.1
-category: ""
+category: "nf-core pipelines"
 subcategory: metagenomics
 role: batch_connect
 description: |

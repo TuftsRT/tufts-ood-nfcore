@@ -1,14 +1,13 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/scrnaseq/4.0.0//docs/images/scrnaseq_pipeline_V3.0-metro_clean.png"
-         alt="nf-core-scrnaseq" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/scrnaseq\/4.1.0\/\/docs\/images\/scrnaseq_pipeline_V3.0-metro_clean.png"
+         alt="nf-core-scrnaseq"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-scrnaseq-4-0-0.json</code></pre>
@@ -58,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -75,7 +73,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing information about the samples in the experiment."
 
   outdir:
@@ -84,7 +82,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -107,7 +105,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "If not using the 10X Genomics platform, a custom barcode whitelist can be used with `--barcode_whitelist`."
 
   aligner:
@@ -187,49 +185,8 @@ attributes:
     help: "Reference genome related files and options required for the workflow."
 
   genome:
-    label: iGenomes
-    widget: select
-    required: false
-    options:
-      - ['None', ' ']
-      - ['GRCh37', 'GRCh37']
-      - ['GRCh38', 'GRCh38']
-      - ['GRCm38', 'GRCm38']
-      - ['TAIR10', 'TAIR10']
-      - ['EB2', 'EB2']
-      - ['UMD3.1', 'UMD3.1']
-      - ['WBcel235', 'WBcel235']
-      - ['CanFam3.1', 'CanFam3.1']
-      - ['GRCz10', 'GRCz10']
-      - ['BDGP6', 'BDGP6']
-      - ['EquCab2', 'EquCab2']
-      - ['EB1', 'EB1']
-      - ['Galgal4', 'Galgal4']
-      - ['Gm01', 'Gm01']
-      - ['Mmul_1', 'Mmul_1']
-      - ['IRGSP-1.0', 'IRGSP-1.0']
-      - ['CHIMP2.1.4', 'CHIMP2.1.4']
-      - ['Rnor_5.0', 'Rnor_5.0']
-      - ['Rnor_6.0', 'Rnor_6.0']
-      - ['R64-1-1', 'R64-1-1']
-      - ['EF2', 'EF2']
-      - ['Sbi1', 'Sbi1']
-      - ['Sscrofa10.2', 'Sscrofa10.2']
-      - ['AGPv3', 'AGPv3']
-      - ['hg38', 'hg38']
-      - ['hg19', 'hg19']
-      - ['mm10', 'mm10']
-      - ['bosTau8', 'bosTau8']
-      - ['ce10', 'ce10']
-      - ['canFam3', 'canFam3']
-      - ['danRer10', 'danRer10']
-      - ['dm6', 'dm6']
-      - ['equCab2', 'equCab2']
-      - ['galGal4', 'galGal4']
-      - ['panTro4', 'panTro4']
-      - ['rn6', 'rn6']
-      - ['sacCer3', 'sacCer3']
-      - ['susScr3', 'susScr3']
+    label: "genome"
+    widget: text_field
     help: "Name of iGenomes reference."
 
   fasta:
@@ -238,8 +195,16 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA genome file."
+
+  igenomes_ignore:
+    label: "igenomes_ignore"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Do not load the iGenomes reference config."
 
   transcript_fasta:
     label: "transcript_fasta"
@@ -247,7 +212,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "A cDNA FASTA file"
 
   gtf:
@@ -256,7 +221,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Reference GTF annotation file"
 
   save_reference:
@@ -275,13 +240,23 @@ attributes:
       - ['true', 'true']
     help: "Specify this parameter to save the intermediate alignment files (STAR, CellRanger) to the results."
 
+  igenomes_base:
+    label: "igenomes_base"
+    widget: path_selector
+    value: "s3://ngi-igenomes/igenomes/"
+    directory: /cluster/tufts
+    favorites:
+      - /cluster/tufts
+      - /cluster/home
+    help: "Directory / URL base for iGenomes references."
+
   txpgene2:
     label: "txp2gene"
     widget: path_selector
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to transcript to gene mapping file. This allows the specification of a transcript to gene mapping file for Kallisto/BUS and Alevin-fry with AlevinQC."
 
   simpleaf_options:
@@ -298,7 +273,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to pre-built Simpleaf index."
 
   simpleaf_umi_resolution:
@@ -329,7 +304,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify a path to the precomputed STAR index."
 
   star_ignore_sjdbgtf:
@@ -368,7 +343,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify a path to the precomputed Kallisto index."
 
   kb_tc1:
@@ -377,7 +352,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify a path to the cDNA transcripts-to-capture."
 
   kb_tc2:
@@ -386,7 +361,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify a path to the intron transcripts-to-capture."
 
   kb_workflow:
@@ -413,7 +388,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify a pre-calculated cellranger index. Readily prepared indexes can be obtained from the 10x Genomics website. "
 
   skip_cellranger_renaming:
@@ -470,7 +445,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Specify a pre-built Cell Ranger index for VDJ analysis."
 
   skip_cellrangermulti_vdjref:
@@ -487,7 +462,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Provide a probe set for fixed RNA-seq profiling (used with FFPE samples). Please refer to the [10x documentation about probesets](https://www.10xgenomics.com/support/single-cell-gene-expression-flex/documentation/steps/probe-sets/chromium-frp-probe-set-files) for more details."
 
   gex_target_panel:
@@ -496,7 +471,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Provide a panel description for targeted sequencing."
 
   gex_cmo_set:
@@ -505,7 +480,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Provide a Cell Multiplexing Oligo (CMO) description file when working with multiplexed samples. This is only necessary if you with to override Cell Ranger's default CMO-set. Please refer to the [10x documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi#cmo-ref) about CMO references for more details."
 
   fb_reference:
@@ -514,7 +489,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Provide a reference file for feature barcoding (e.g. antibody measurements). Please refer to the [Cell Ranger Feature Reference documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-feature-ref-csv) for more details."
 
   vdj_inner_enrichment_primers:
@@ -523,7 +498,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "This argument takes a .txt file containing primer sequences that were used to enrich cDNA for V(D)J sequences. This is only necessary if you with to override Cell Ranger's defaults."
 
   gex_barcode_sample_assignment:
@@ -532,7 +507,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "This is only necessary to override Cell Ranger's default cell calling and tag calling steps. In most cases you need to only use the `cellranger_multi_barcodes` parameter. Please refer to the [10x documentation](https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/running-pipelines/cr-3p-multi#barcode-asst) for more information about this file."
 
   cellranger_multi_barcodes:
@@ -541,7 +516,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Additional samplesheet to provide information about multiplexed samples. See the `Usage` section for more details."
 
 
@@ -568,10 +543,12 @@ form:
   - reference_genome_options
   - genome
   - fasta
+  - igenomes_ignore
   - transcript_fasta
   - gtf
   - save_reference
   - save_align_intermeds
+  - igenomes_base
   - txpgene2
   - simpleaf_options
   - simpleaf_index
@@ -603,5 +580,6 @@ form:
   - vdj_inner_enrichment_primers
   - gex_barcode_sample_assignment
   - cellranger_multi_barcodes
+
   - tower_access_token
   - resume

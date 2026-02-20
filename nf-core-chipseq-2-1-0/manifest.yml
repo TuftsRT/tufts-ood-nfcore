@@ -1,7 +1,7 @@
 ---
 name: chipseq 2.1.0
-category: nf-core pipelines
-subcategory: chipseq
+category: "nf-core pipelines"
+subcategory: epigenomics
 role: batch_connect
 description: |
   This app will launch the [chipseq](https://nf-co.re/chipseq) pipeline developed by nf-core community. 

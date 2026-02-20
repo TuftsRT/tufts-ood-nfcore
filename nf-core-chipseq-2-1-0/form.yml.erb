@@ -1,10 +1,9 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/chipseq/2.1.0//docs/images/nf-core-chipseq_metro_map_grey.png"
-         alt="nf-core-chipseq" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/chipseq\/2.1.0\/\/docs\/images\/nf-core-chipseq_metro_map_grey.png"
+         alt="nf-core-chipseq"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
@@ -13,8 +12,6 @@ form_header: |
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-chipseq-2-1-0.json</code></pre>
   </div>
-
-
 
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
@@ -60,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -80,7 +76,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing information about the samples in the experiment."
 
   fragment_size:
@@ -112,7 +108,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -142,49 +138,8 @@ attributes:
     help: "Reference genome related files and options required for the workflow."
 
   genome:
-    label: iGenomes
-    widget: select
-    required: false
-    options:
-      - ['None', ' ']
-      - ['GRCh37', 'GRCh37']
-      - ['GRCh38', 'GRCh38']
-      - ['GRCm38', 'GRCm38']
-      - ['TAIR10', 'TAIR10']
-      - ['EB2', 'EB2']
-      - ['UMD3.1', 'UMD3.1']
-      - ['WBcel235', 'WBcel235']
-      - ['CanFam3.1', 'CanFam3.1']
-      - ['GRCz10', 'GRCz10']
-      - ['BDGP6', 'BDGP6']
-      - ['EquCab2', 'EquCab2']
-      - ['EB1', 'EB1']
-      - ['Galgal4', 'Galgal4']
-      - ['Gm01', 'Gm01']
-      - ['Mmul_1', 'Mmul_1']
-      - ['IRGSP-1.0', 'IRGSP-1.0']
-      - ['CHIMP2.1.4', 'CHIMP2.1.4']
-      - ['Rnor_5.0', 'Rnor_5.0']
-      - ['Rnor_6.0', 'Rnor_6.0']
-      - ['R64-1-1', 'R64-1-1']
-      - ['EF2', 'EF2']
-      - ['Sbi1', 'Sbi1']
-      - ['Sscrofa10.2', 'Sscrofa10.2']
-      - ['AGPv3', 'AGPv3']
-      - ['hg38', 'hg38']
-      - ['hg19', 'hg19']
-      - ['mm10', 'mm10']
-      - ['bosTau8', 'bosTau8']
-      - ['ce10', 'ce10']
-      - ['canFam3', 'canFam3']
-      - ['danRer10', 'danRer10']
-      - ['dm6', 'dm6']
-      - ['equCab2', 'equCab2']
-      - ['galGal4', 'galGal4']
-      - ['panTro4', 'panTro4']
-      - ['rn6', 'rn6']
-      - ['sacCer3', 'sacCer3']
-      - ['susScr3', 'susScr3']
+    label: "genome"
+    widget: text_field
     help: "Name of iGenomes reference."
 
   fasta:
@@ -193,7 +148,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to FASTA genome file."
 
   gtf:
@@ -202,7 +157,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to GTF annotation file."
 
   gff:
@@ -211,7 +166,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to GFF3 annotation file."
 
   bwa_index:
@@ -220,7 +175,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built BWA index."
 
   bowtie2_index:
@@ -229,7 +184,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built Bowtie2 index."
 
   chromap_index:
@@ -238,7 +193,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built Chromap index."
 
   star_index:
@@ -247,7 +202,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to directory or tar.gz archive for pre-built STAR index."
 
   gene_bed:
@@ -256,7 +211,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to BED file containing gene intervals. This will be created from the GTF file if not specified."
 
   macs_gsize:
@@ -271,7 +226,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to blacklist regions in BED format, used for filtering alignments."
 
   save_reference:
@@ -281,6 +236,24 @@ attributes:
       - ['false', 'false']
       - ['true', 'true']
     help: "If generated by the pipeline save the BWA index in the results directory."
+
+  igenomes_base:
+    label: "igenomes_base"
+    widget: path_selector
+    value: "s3://ngi-igenomes/igenomes/"
+    directory: /cluster/tufts
+    favorites:
+      - /cluster/tufts
+      - /cluster/home
+    help: "Directory / URL base for iGenomes references."
+
+  igenomes_ignore:
+    label: "igenomes_ignore"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Do not load the iGenomes reference config."
 
   adapter_trimming_options:
     label: "Adapter trimming options"
@@ -532,9 +505,10 @@ attributes:
   deseq2_vst:
     label: "deseq2_vst"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Use vst transformation instead of rlog with DESeq2."
 
   skip_plot_profile:
@@ -621,6 +595,8 @@ form:
   - macs_gsize
   - blacklist
   - save_reference
+  - igenomes_base
+  - igenomes_ignore
   - adapter_trimming_options
   - clip_r1
   - clip_r2
@@ -658,5 +634,6 @@ form:
   - skip_igv
   - skip_multiqc
   - skip_qc
+
   - tower_access_token
   - resume

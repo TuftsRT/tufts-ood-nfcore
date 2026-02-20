@@ -1,8 +1,7 @@
 ---
 name: rnafusion 4.0.0
-category: nf-core pipelines
-subcategory: rnafusion
+category: "nf-core pipelines"
+subcategory: rnaseq
 role: batch_connect
 description: |
   This app will launch the [rnafusion](https://nf-co.re/rnafusion) pipeline developed by nf-core community. 
-  

@@ -1,19 +1,18 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/funcscan/3.0.0//docs/images/funcscan_metro_workflow.png"
-         alt="nf-core-funcscan" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/funcscan\/3.0.0\/\/docs\/images\/funcscan_metro_workflow.png"
+         alt="nf-core-funcscan"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 10px;">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-funcscan-3-0-0.json</code></pre>
   </div>
-  
+
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/num_cores_generic.yml").indent(2) %>
@@ -58,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -75,7 +73,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing sample names and paths to corresponding FASTA files, and optional annotation files."
 
   outdir:
@@ -84,7 +82,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -576,9 +574,10 @@ attributes:
   annotation_prokka_compliant:
     label: "annotation_prokka_compliant"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Force contig name to Genbank/ENA/DDJB naming rules."
 
   annotation_prokka_addgenes:
@@ -1342,9 +1341,10 @@ attributes:
   arg_rgi_split_prodigal_jobs:
     label: "arg_rgi_split_prodigal_jobs"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Run multiple prodigal jobs simultaneously for contigs in a fasta file."
 
   arg_abricate:
@@ -1988,5 +1988,6 @@ form:
   - bgc_hmmsearch_savealignments
   - bgc_hmmsearch_savetargets
   - bgc_hmmsearch_savedomains
+
   - tower_access_token
   - resume

@@ -1,19 +1,17 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https://raw.githubusercontent.com/nf-core/differentialabundance/1.5.0/docs/images/workflow.png" 
-         alt="nf-core-differentialabundance" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/differentialabundance\/1.5.0\/\/docs\/images\/workflow.png"
+         alt="nf-core-differentialabundance"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px">
+  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
   This app automatically saves your form inputs between sessions.<br>
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-differentialabundance-1-5-0.json</code></pre>
   </div>
-
 
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
@@ -59,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -95,7 +92,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file containing information about the samples in the experiment."
 
   contrasts:
@@ -104,7 +101,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "A CSV file describing sample contrasts"
 
   outdir:
@@ -113,7 +110,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   study_abundance_type:
@@ -139,7 +136,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "TSV-format abundance matrix"
 
   transcript_length_matrix:
@@ -233,7 +230,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "A text file listing technical features (e.g. spikes)"
 
   features_metadata_cols:
@@ -284,9 +281,10 @@ attributes:
   affy_background:
     label: "affy_background"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "logical value. If TRUE, then background correct using RMA background correction."
 
   affy_bgversion:
@@ -313,9 +311,10 @@ attributes:
   affy_build_annotation:
     label: "affy_build_annotation"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "logical value. If TRUE, a matrix of probe annotations will be derived."
 
   affy_rm_mask:
@@ -380,9 +379,10 @@ attributes:
   proteus_plotmv_loess:
     label: "proteus_plotmv_loess"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Should a loess line be added to the plot of mean-variance relationship of the conditions? Default: true."
 
   proteus_palette_name:
@@ -587,9 +587,10 @@ attributes:
   differential_foldchanges_logged:
     label: "differential_foldchanges_logged"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Indicate whether or not fold changes are on the log scale (default is to assume they are)"
 
   differential_palette_name:
@@ -673,9 +674,10 @@ attributes:
   deseq2_independent_filtering:
     label: "deseq2_independent_filtering"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "`independentFiltering` parameter passed to results()"
 
   deseq2_lfc_threshold:
@@ -723,9 +725,10 @@ attributes:
   deseq2_shrink_lfc:
     label: "deseq2_shrink_lfc"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Shink fold changes in results?"
 
   deseq2_cores:
@@ -738,9 +741,10 @@ attributes:
   deseq2_vs_blind:
     label: "deseq2_vs_blind"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "`blind` parameter for rlog() and/ or vst()"
 
   deseq2_vst_nsub:
@@ -990,9 +994,10 @@ attributes:
   gsea_make_sets:
     label: "gsea_make_sets"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Make detailed geneset report?"
 
   gsea_median:
@@ -1075,14 +1080,16 @@ attributes:
   gprofiler2_significant:
     label: "gprofiler2_significant"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Should only significant enrichment results be considered?"
 
   gprofiler2_measure_underrepresentation:
     label: "gprofiler2_measure_underrepresentation"
     widget: select
+    value: false
     options:
       - ['false', 'false']
       - ['true', 'true']
@@ -1108,6 +1115,7 @@ attributes:
   gprofiler2_evcodes:
     label: "gprofiler2_evcodes"
     widget: select
+    value: false
     options:
       - ['false', 'false']
       - ['true', 'true']
@@ -1172,9 +1180,10 @@ attributes:
   shinyngs_build_app:
     label: "shinyngs_build_app"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Should a Shiny app be built?"
 
   shinyngs_deploy_to_shinyapps_io:
@@ -1200,9 +1209,10 @@ attributes:
   shinyngs_guess_unlog_matrices:
     label: "shinyngs_guess_unlog_matrices"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Should we guess the log status of matrices and unlog for the app?"
 
   gene_set_options:
@@ -1238,10 +1248,11 @@ attributes:
   report_file:
     label: "report_file"
     widget: path_selector
+    value: "${projectDir}/assets/differentialabundance_report.Rmd"
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Rmd report template from which to create the pipeline report"
 
   logo_file:
@@ -1288,9 +1299,10 @@ attributes:
   report_scree:
     label: "report_scree"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Whether to generate a scree plot in the report"
 
   report_round_digits:
@@ -1311,49 +1323,8 @@ attributes:
     help: "Reference genome related files and options required for the workflow."
 
   genome:
-    label: iGenomes
-    widget: select
-    required: false
-    options:
-      - ['None', ' ']
-      - ['GRCh37', 'GRCh37']
-      - ['GRCh38', 'GRCh38']
-      - ['GRCm38', 'GRCm38']
-      - ['TAIR10', 'TAIR10']
-      - ['EB2', 'EB2']
-      - ['UMD3.1', 'UMD3.1']
-      - ['WBcel235', 'WBcel235']
-      - ['CanFam3.1', 'CanFam3.1']
-      - ['GRCz10', 'GRCz10']
-      - ['BDGP6', 'BDGP6']
-      - ['EquCab2', 'EquCab2']
-      - ['EB1', 'EB1']
-      - ['Galgal4', 'Galgal4']
-      - ['Gm01', 'Gm01']
-      - ['Mmul_1', 'Mmul_1']
-      - ['IRGSP-1.0', 'IRGSP-1.0']
-      - ['CHIMP2.1.4', 'CHIMP2.1.4']
-      - ['Rnor_5.0', 'Rnor_5.0']
-      - ['Rnor_6.0', 'Rnor_6.0']
-      - ['R64-1-1', 'R64-1-1']
-      - ['EF2', 'EF2']
-      - ['Sbi1', 'Sbi1']
-      - ['Sscrofa10.2', 'Sscrofa10.2']
-      - ['AGPv3', 'AGPv3']
-      - ['hg38', 'hg38']
-      - ['hg19', 'hg19']
-      - ['mm10', 'mm10']
-      - ['bosTau8', 'bosTau8']
-      - ['ce10', 'ce10']
-      - ['canFam3', 'canFam3']
-      - ['danRer10', 'danRer10']
-      - ['dm6', 'dm6']
-      - ['equCab2', 'equCab2']
-      - ['galGal4', 'galGal4']
-      - ['panTro4', 'panTro4']
-      - ['rn6', 'rn6']
-      - ['sacCer3', 'sacCer3']
-      - ['susScr3', 'susScr3']
+    label: "genome"
+    widget: text_field
     help: "Name of iGenomes reference."
 
   gtf:
@@ -1362,8 +1333,16 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Genome annotation file in GTF format"
+
+  igenomes_ignore:
+    label: "igenomes_ignore"
+    widget: select
+    options:
+      - ['false', 'false']
+      - ['true', 'true']
+    help: "Do not load the iGenomes reference config."
 
 
 form:
@@ -1528,5 +1507,7 @@ form:
   - reference_genome_options
   - genome
   - gtf
+  - igenomes_ignore
+
   - tower_access_token
   - resume

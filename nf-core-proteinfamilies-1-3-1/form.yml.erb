@@ -1,10 +1,9 @@
 ---
 cluster: "pax"
-
 form_header: |
   <div style="text-align: center; margin-bottom: 20px;">
-  <img src="https://raw.githubusercontent.com/nf-core/proteinfamilies/dev//docs/images/proteinfamilies_workflow_light.png"
-         alt="nf-core-proteinfamilies" 
+    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/proteinfamilies\/2.2.0\/\/docs\/images\/proteinfamilies_workflow_light.png"
+         alt="nf-core-proteinfamilies"
          style="max-width: 600px; height: auto; margin-bottom: 10px;">
   </div>
 
@@ -13,7 +12,6 @@ form_header: |
   To restore settings to <strong>default values</strong>, run the following command in terminal:
   <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-proteinfamilies-1-3-1.json</code></pre>
   </div>
-
 
 attributes:
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
@@ -59,7 +57,6 @@ attributes:
     help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
 
 
-
   input_output_options:
     label: "Input/output options"
     widget: 'check_box'
@@ -76,7 +73,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "Path to comma-separated file `.csv` containing information about the samples in the experiment."
 
   outdir:
@@ -85,7 +82,7 @@ attributes:
     directory: /cluster/tufts
     favorites:
       - /cluster/tufts
-      - /cluster/home 
+      - /cluster/home
     help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
 
   multiqc_title:
@@ -204,9 +201,10 @@ attributes:
   trim_ends_only:
     label: "trim_ends_only"
     widget: select
+    value: true
     options:
-      - ['false', 'false']
       - ['true', 'true']
+      - ['false', 'false']
     help: "Choose if ClipKIT should only clip gaps at the ends of the MSAs."
 
   gap_threshold:
@@ -342,5 +340,6 @@ form:
   - cluster_coverage_for_redundancy
   - cluster_cov_mode_for_redundancy
   - save_non_redundant_seqs_fasta
+
   - tower_access_token
   - resume

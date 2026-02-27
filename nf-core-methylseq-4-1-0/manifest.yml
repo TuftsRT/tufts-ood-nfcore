@@ -1,6 +1,6 @@
 ---
 name: methylseq 4.1.0
-category: "nf-core pipelines"
+category: ""
 subcategory: epigenomics
 role: batch_connect
 description: |

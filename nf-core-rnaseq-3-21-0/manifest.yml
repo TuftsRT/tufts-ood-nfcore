@@ -1,6 +1,6 @@
 ---
 name: rnaseq 3.21.0
-category: "nf-core pipelines"
+category: ""
 subcategory: rnaseq
 role: batch_connect
 description: |

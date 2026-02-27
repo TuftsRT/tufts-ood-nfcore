@@ -1,6 +1,6 @@
 ---
 name: funcscan 3.0.0
-category: "nf-core pipelines"
+category: ""
 subcategory: metagenomics
 role: batch_connect
 description: |

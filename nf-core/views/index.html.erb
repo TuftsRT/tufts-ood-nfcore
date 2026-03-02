@@ -1,0 +1,290 @@
+<% content_for :title, "nf-core pipelines - #{@user_configuration.dashboard_title}" %>
+
+<%= render partial: 'batch_connect/shared/breadcrumb',
+  locals: {
+    links: [
+      { text: t('dashboard.breadcrumbs_home'), href: root_path },
+      { text: 'nf-core pipelines' }
+    ]
+  }
+%>
+
+<style>
+  :root {
+    --nf-green: #24b39b;
+    --nf-green-dark: #0f766e;
+    --nf-green-darker: #02110d;
+    --nf-green-soft: #e8f8f4;
+    --nf-green-border: #b9e7de;
+    --nf-chip-hover: #96d9aa;
+    --nf-chip-hover-border: #0b5f59;
+  }
+
+  .nf-page {
+    background: linear-gradient(180deg, #f7fbfa 0%, #f8fafc 100%);
+    border: 1px solid var(--nf-green-border);
+    border-radius: 14px;
+    padding: 1rem 1rem 1.25rem;
+    box-shadow: 0 6px 18px rgba(15, 118, 110, 0.06);
+  }
+
+  .nf-logo-wrap {
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .nf-logo {
+    width: 240px !important;
+    max-width: 240px !important;
+    height: auto !important;
+    display: block;
+  }
+
+  .nf-lead {
+    margin: 0;
+    color: #475569;
+    font-size: 1.24rem;
+    line-height: 1.55;
+    max-width: 1000px;
+  }
+
+  .nf-lead a {
+    color: var(--nf-green-dark);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .nf-lead strong {
+  color: var(--nf-green-dark);
+  }
+
+  .nf-lead a:hover {
+    text-decoration: underline;
+  }
+
+  .nf-toolbar {
+    margin: 1rem 0 0.5rem;
+  }
+
+  .nf-search {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid var(--nf-green-border);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    background: #fff;
+  }
+
+  .nf-search:focus {
+    outline: none;
+    border-color: var(--nf-green);
+    box-shadow: 0 0 0 3px rgba(36, 179, 155, 0.2);
+  }
+
+  .nf-groups-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 992px) {
+    .nf-groups-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .nf-section {
+    margin-top: 0.25rem;
+    border: 1px solid var(--nf-green-border);
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .nf-section-title {
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    background: var(--nf-green-soft);
+    border-bottom: 1px solid var(--nf-green-border);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    color: var(--nf-green-dark);
+  }
+
+  .nf-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .nf-table th,
+  .nf-table td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+  }
+
+  .nf-table th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    background: #fff;
+  }
+
+  .nf-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .nf-pipeline-name {
+    font-weight: 600;
+    text-transform: lowercase;
+    color: #334155;
+    letter-spacing: 0.01em;
+  }
+
+  .nf-version-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .nf-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid var(--nf-green-border);
+    color: #0b5f59;
+    background: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(15, 118, 110, 0.08);
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, transform 0.08s ease;
+  }
+
+  .nf-chip:visited {
+    color: #0b5f59;
+  }
+
+  .nf-chip:hover {
+    background: var(--nf-chip-hover) !important;
+    border-color: var(--nf-chip-hover-border) !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 22px rgba(15, 118, 110, 0.35) !important;
+    text-decoration: none;
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .nf-chip:focus-visible {
+    outline: none;
+    background: var(--nf-chip-hover) !important;
+    border-color: var(--nf-chip-hover-border) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.35), 0 10px 22px rgba(29, 78, 216, 0.3) !important;
+  }
+
+  .nf-chip:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(15, 118, 110, 0.18);
+  }
+
+  .nf-empty {
+    margin-top: 1rem;
+    border: 1px dashed var(--nf-green-border);
+    border-radius: 10px;
+    background: #fdfefe;
+    padding: 0.9rem 1rem;
+    color: #4b5563;
+  }
+</style>
+
+<div class="nf-page">
+  <div class="nf-logo-wrap">
+    <img src="<%= "#{root_path}/nf-core-logo.png" %>" alt="nf-core" class="nf-logo">
+  </div>
+
+  <p class="nf-lead">
+    <a href="https://nf-co.re/" target="_blank" rel="noopener">nf-core</a> is a community effort to collect a curated set of best-practice,
+    reproducible bioinformatics pipelines. Choose a pipeline below, then pick a
+    <strong>version</strong> to launch in Open OnDemand.
+  </p>
+
+  <div class="nf-toolbar">
+    <input id="nf-search" class="nf-search" type="text" placeholder="search pipeline or version...">
+  </div>
+
+  <% if @groups.present? %>
+    <div class="nf-groups-grid">
+      <% @groups.each do |group| %>
+        <% next if group[:pipelines].blank? %>
+        <section class="nf-section nf-filter-group" data-group="<%= group[:name].to_s.downcase %>">
+          <h2 class="nf-section-title"><%= group[:name].to_s.downcase %></h2>
+          <table class="nf-table">
+            <thead>
+              <tr>
+                <th style="width: 35%;">pipeline</th>
+                <th>versions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% group[:pipelines].each do |pipeline| %>
+                <tr class="nf-filter-row" data-name="<%= pipeline[:title].to_s.downcase %>">
+                  <td><span class="nf-pipeline-name"><%= pipeline[:title].to_s.downcase %></span></td>
+                  <td>
+                    <div class="nf-version-chips">
+                      <% pipeline[:versions].each do |v| %>
+                        <% app = v[:app] %>
+                        <% link = app&.links&.first %>
+                        <% next unless link %>
+                        <a class="nf-chip nf-filter-chip"
+                           href="<%= link.url.to_s %>"
+                           data-version="<%= v[:label].to_s.downcase %>"
+                           target="<%= link.new_tab? ? '_blank' : nil %>"
+                           <%= link.data.map { |k, val| %(data-#{k}="#{ERB::Util.html_escape(val)}") }.join(' ').html_safe %>>
+                          <%= v[:label].presence || 'launch' %>
+                        </a>
+                      <% end %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="nf-empty">no nf-core pipeline apps are currently available.</div>
+  <% end %>
+</div>
+
+<script>
+  (function() {
+    var input = document.getElementById('nf-search');
+    if (!input) return;
+
+    function filter() {
+      var q = input.value.trim().toLowerCase();
+      var groups = document.querySelectorAll('.nf-filter-group');
+
+      groups.forEach(function(group) {
+        var anyVisible = false;
+        group.querySelectorAll('.nf-filter-row').forEach(function(row) {
+          var name = row.getAttribute('data-name') || '';
+          var versions = Array.from(row.querySelectorAll('.nf-filter-chip'))
+            .map(function(c) { return c.getAttribute('data-version') || ''; })
+            .join(' ');
+          var visible = !q || name.indexOf(q) !== -1 || versions.indexOf(q) !== -1;
+          row.style.display = visible ? '' : 'none';
+          if (visible) anyVisible = true;
+        });
+        group.style.display = anyVisible ? '' : 'none';
+      });
+    }
+
+    input.addEventListener('input', filter);
+  })();
+</script>

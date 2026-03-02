@@ -15,15 +15,29 @@ links users to child pipeline apps.
 - `manifest.yml`: OOD app metadata
 - `config.ru`: Rack entrypoint
 - `app.rb`: app logic (loads catalog, renders page)
-- `views/index.erb`: UI template
 - `config/pipelines.yml`: sample pipeline catalog
 
 ## Quick deploy
 
 1. Copy this directory to your OOD sys apps path:
-   - usually `/var/www/ood/apps/sys/nf-core-home`
+   - usually `/var/www/ood/apps/sys/nf-core`
 2. Ensure ownership/permissions match your site policy.
-3. Restart the user NGINX app or reopen dashboard.
+
+3. This is not a full standalone OOD app, just some partials that add functionality to the dashboard.  To make this work it needs to be connected to the existing dashboard using the following commands.
+
+To use this dashboard its files needs to be linked into the proper places in the OOD software. Run the commands below to do so.
+```
+sudo ln -s /var/www/ood/apps/sys/nf-core/controllers/nf_pipelines_controller.rb /var/www/ood/apps/sys/dashboard/app/controllers/nf_pipelines_controller.rb
+
+mkdir -p /etc/ood/config/apps/dashboard/views/nf_pipelines/
+sudo ln -s /var/www/ood/apps/sys/nf-core/views/index.html.erb /etc/ood/config/apps/dashboard/views/nf_pipelines/index.html.erb
+
+mkdir -p /etc/ood/config/apps/dashboard/initializers
+sudo ln -s /var/www/ood/apps/sys/nf-core/initializers/nf_core_dashboard_route.rb /etc/ood/config/apps/dashboard/initializers/nf_core_dashboard_route.rb
+``` 
+
+4. Restart the user NGINX app or reopen dashboard.
+
 
 ## Configuration
 
@@ -79,22 +93,4 @@ app appears in dashboard menus.
 
 In each child app `manifest.yml`, set an empty or hidden category based on your
 local OOD behavior/policy.
-
-## How to keep ondemand default header and navigation
-### Files To Edit In Dashboard
-
-1. `config/routes.rb`
-2. `app/controllers/nf_pipelines_controller.rb`
-3. `app/views/nf_pipelines/index.html.erb`
-
-### Step-by-Step
-
-1. Add route in `config/routes.rb`.
-
-```ruby
-get 'nf-core', to: 'nf_pipelines#index', as: 'nf_core'
-```
-
-2. Add controller `app/controllers/nf_pipelines_controller.rb`.
-3. Add page view `app/views/nf_pipelines/index.html.erb`.
 

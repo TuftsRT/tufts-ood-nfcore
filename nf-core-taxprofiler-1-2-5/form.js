@@ -257,7 +257,7 @@ function isFirstLevelControllerLabel(label) {
 
 function isAlwaysIconLabel(labelText) {
   const normalized = normalizeLabel(labelText);
-  return /\b(cores?|cpus?|memory|ram|hours?|time|walltime|resume|tower_access_token|tower access token)\b/.test(normalized);
+  return /\b(cores?|cpus?|memory|ram|hours?|time|walltime|resume|tower_access_token|tower access token|working directory)\b/.test(normalized);
 }
 
 document.addEventListener("DOMContentLoaded", function () {

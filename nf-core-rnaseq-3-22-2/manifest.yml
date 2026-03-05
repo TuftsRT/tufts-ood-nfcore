@@ -1,6 +1,6 @@
 ---
 name: rnaseq 3.22.2
-category: ""
+category: 
 subcategory: rnaseq
 role: batch_connect
 description: |

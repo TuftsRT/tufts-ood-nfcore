@@ -1,6 +1,6 @@
 ---
 name: taxprofiler 1.2.5
-category: ""
+category:
 subcategory: metagenomics
 role: batch_connect
 description: |

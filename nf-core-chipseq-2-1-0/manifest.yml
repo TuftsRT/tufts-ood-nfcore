@@ -1,6 +1,6 @@
 ---
 name: chipseq 2.1.0
-category: ""
+category:
 subcategory: epigenomics
 role: batch_connect
 description: |

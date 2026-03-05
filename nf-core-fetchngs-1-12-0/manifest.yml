@@ -1,6 +1,6 @@
 ---
 name: fetchngs 1.12.0
-category: ""
+category:
 subcategory: utility
 role: batch_connect
 description: |

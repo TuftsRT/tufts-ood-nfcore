@@ -1,6 +1,6 @@
 ---
 name: mag 5.0.0
-category: ""
+category: 
 subcategory: metagenomics
 role: batch_connect
 description: |

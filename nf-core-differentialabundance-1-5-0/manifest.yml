@@ -1,6 +1,6 @@
 ---
 name: differentialabundance 1.5.0
-category: ""
+category:
 subcategory: rnaseq
 role: batch_connect
 description: |

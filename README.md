@@ -26,6 +26,20 @@ This repository demonstrates a practical nf-core deployment pattern for Open OnD
 
 This design is especially useful for HPC users who want to run bioinformatics workflows but are not comfortable building long Nextflow command lines by hand.
 
+## User Interface Overview
+
+### nf-core Dashboard
+
+The parent app provides a single dashboard entry point where users can browse available nf-core workflows and launch specific versions.
+
+![nf-core dashboard](docs/nf-core-dashboard.png)
+
+### Individual Pipeline App Form
+
+Each child app presents a pipeline-specific Open OnDemand form for configuring workflow inputs, resources, and optional parameters.
+
+![nf-core app form](docs/nf-core-app.png)
+
 ## Repository Structure
 
 The exact contents may change over time, but the repository generally contains:
@@ -78,6 +92,7 @@ The exact steps depend on your site, but a typical process is:
 4. Configure child app visibility in `manifest.yml` so users access them through the parent dashboard rather than top-level navigation.
 5. Restart or refresh the OOD dashboard environment.
 6. Test the parent dashboard, several child app forms, and at least one real workflow submission.
+7. Plan for routine cache maintenance if your deployment uses shared Open OnDemand app cache or staged app metadata. At Tufts, cache cleanup is handled with a companion utility repository.
 
 ## Site Customization Areas
 
@@ -107,9 +122,10 @@ This repository reflects Tufts-specific deployment choices. It should be treated
 
 It should not be assumed to be directly portable to another site without local adaptation.
 
-## Related Repository
+## Related Repositories
 
 - [TuftsRT/nf-core_open-ondemand](https://github.com/TuftsRT/nf-core_open-ondemand): generator/framework for building site-specific nf-core Open OnDemand apps
+- [TuftsRT/tufts_ood_cache_reset](https://github.com/TuftsRT/tufts_ood_cache_reset): utility for clearing cached Open OnDemand app state when deployment changes are not reflected immediately
 
 ## Citation
 

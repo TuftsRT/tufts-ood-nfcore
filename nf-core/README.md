@@ -1,96 +1,94 @@
-# nf-core Home (Standalone Open OnDemand Parent App)
+# nf-core Dashboard App for Open OnDemand
 
-This app is a standalone Open OnDemand app that serves as a landing page for
-nf-core pipelines. It keeps one clean entry point in the OOD dashboard and
-links users to child pipeline apps.
+This app provides a single Open OnDemand entry point for a collection of versioned `nf-core-*` pipeline apps. It groups child apps by `subcategory`, collapses multiple versions of the same pipeline into one listing, and links users to the corresponding launch forms.
 
-## What this gives you
+## Purpose
 
-- One dashboard tile: `nf-core Home`
-- A curated pipeline catalog page for non-CLI users
-- Launch links to existing pipeline apps (`/pun/sys/dashboard/apps/show/<app>`)
+This directory is the parent or landing-page app for the nf-core apps in this repository. It is intended to reduce menu clutter in Open OnDemand by exposing one nf-core dashboard page instead of many separate app tiles.
 
-## Directory layout
+## Key Features
 
-- `manifest.yml`: OOD app metadata
-- `config.ru`: Rack entrypoint
-- `app.rb`: app logic (loads catalog, renders page)
-- `config/pipelines.yml`: sample pipeline catalog
+- Discovers child apps from `manifest.yml` files under the Open OnDemand system app directory.
+- Groups pipelines by `subcategory` and versions by app name.
+- Links directly to existing child Batch Connect apps.
+- Supports hiding child apps from top-level navigation while keeping them available from this dashboard.
 
-## Quick deploy
+## How It Works
 
-1. Copy this directory to your OOD sys apps path:
-   - usually `/var/www/ood/apps/sys/nf-core`
-2. Ensure ownership/permissions match your site policy.
+The current implementation is primarily a dashboard integration, not a self-contained standalone app. The files in this directory are used to extend the existing Open OnDemand dashboard:
 
-3. This is not a full standalone OOD app, just some partials that add functionality to the dashboard.  To make this work it needs to be connected to the existing dashboard using the following commands.
+- `controllers/nf_pipelines_controller.rb` builds the grouped pipeline catalog from installed child apps.
+- `initializers/nf_core_dashboard_route.rb` adds the dashboard route.
+- `views/index.html.erb` renders the dashboard page inside Open OnDemand.
 
-To use this dashboard its files needs to be linked into the proper places in the OOD software. Run the commands below to do so.
+The code expects child apps to:
+
+- have names that begin with `nf-core-`
+- be Batch Connect apps
+- use `manifest.yml` metadata such as `name` and `subcategory`
+
+## Installation
+
+1. Install this directory under your Open OnDemand system apps path, typically `/var/www/ood/apps/sys/nf-core`.
+2. Install the child `nf-core-*` apps under the same system apps path.
+3. Link the controller, route initializer, and dashboard view into the dashboard customization locations used by your Open OnDemand deployment.
+4. Restart or refresh the dashboard so the new route and view are loaded.
+
+A typical deployment looks like this:
+
+```bash
+sudo ln -s /var/www/ood/apps/sys/nf-core/controllers/nf_pipelines_controller.rb \
+  /var/www/ood/apps/sys/dashboard/app/controllers/nf_pipelines_controller.rb
+
+sudo mkdir -p /etc/ood/config/apps/dashboard/views/nf_pipelines
+sudo ln -s /var/www/ood/apps/sys/nf-core/views/index.html.erb \
+  /etc/ood/config/apps/dashboard/views/nf_pipelines/index.html.erb
+
+sudo mkdir -p /etc/ood/config/apps/dashboard/initializers
+sudo ln -s /var/www/ood/apps/sys/nf-core/initializers/nf_core_dashboard_route.rb \
+  /etc/ood/config/apps/dashboard/initializers/nf_core_dashboard_route.rb
 ```
-sudo ln -s /var/www/ood/apps/sys/nf-core/controllers/nf_pipelines_controller.rb /var/www/ood/apps/sys/dashboard/app/controllers/nf_pipelines_controller.rb
-
-mkdir -p /etc/ood/config/apps/dashboard/views/nf_pipelines/
-sudo ln -s /var/www/ood/apps/sys/nf-core/views/index.html.erb /etc/ood/config/apps/dashboard/views/nf_pipelines/index.html.erb
-
-mkdir -p /etc/ood/config/apps/dashboard/initializers
-sudo ln -s /var/www/ood/apps/sys/nf-core/initializers/nf_core_dashboard_route.rb /etc/ood/config/apps/dashboard/initializers/nf_core_dashboard_route.rb
-``` 
-
-4. Restart the user NGINX app or reopen dashboard.
-
 
 ## Configuration
 
-Environment variables:
+The dashboard implementation relies on installed child apps rather than a hand-maintained catalog file.
 
-- `NF_CORE_CATALOG`: absolute path to pipeline catalog YAML.
-  - Default: `config/pipelines.yml` within the app
-- `OOD_DASHBOARD_BASE`: base path to dashboard app routes.
-  - Default: `/pun/sys/dashboard`
+Relevant runtime assumptions:
 
-Catalog format:
+- Child apps are installed under the system app directory.
+- Child apps use names like `nf-core-rnaseq-3-23-0`.
+- Child app `manifest.yml` files provide readable `name` and `subcategory` values.
+- Child apps may use empty categories so they stay hidden from the main navigation.
 
-```yaml
-title: nf-core Pipelines
-description: Choose a pipeline to begin.
-groups:
-  - name: Recommended for Beginners
-    pipelines:
-      - title: RNA-seq
-        summary: Differential expression workflow.
-        tags: [RNA, Beginner]
-        versions:
-          - app_name: nf-core-rnaseq-3-21-0
-            label: v3.21.0
-          - app_name: nf-core-rnaseq-3-22-2
-            label: v3.22.2
-```
+The Rack app code in `app.rb` also references `NF_CORE_APPS_DIR` and `OOD_DASHBOARD_BASE`, but the main deployment path in this repository is the dashboard controller/view integration described above.
 
-Notes:
+## Usage
 
-- Use `versions` to show one card with multiple version launch buttons.
-- Backward-compatible: `app_name` (without `versions`) still works as one link.
-- Flat entries are auto-merged into one card when app names follow
-  `nf-core-<pipeline>-X-Y-Z`.
-- If needed, set `pipeline_key` explicitly to force grouping.
+1. Open the nf-core dashboard page in Open OnDemand.
+2. Browse by pipeline group or search by pipeline/version.
+3. Select a pipeline version.
+4. Complete the child app form and submit the workflow.
 
-Example forced grouping:
+## Important Notes and Limitations
 
-```yaml
-pipelines:
-  - pipeline_key: rnaseq
-    title: RNA-seq
-    app_name: nf-core-rnaseq-3-21-0
-  - pipeline_key: rnaseq
-    title: RNA-seq
-    app_name: nf-core-rnaseq-3-22-2
-```
+- This app is not the workflow launcher itself; the child apps handle submission.
+- The current grouping logic depends on manifest naming conventions and app names.
+- The repository includes a sample `config/pipelines.yml`, but the dashboard controller does not use it at runtime.
+- The Rack app stub in `app.rb` references a template path that is not the main path used by the deployed dashboard integration.
 
-## Hiding child pipeline apps from main nav
+## Files
 
-To avoid clutter, keep pipeline apps out of nav categories so only this parent
-app appears in dashboard menus.
+- `manifest.yml`: metadata for the parent app
+- `controllers/nf_pipelines_controller.rb`: dashboard controller
+- `initializers/nf_core_dashboard_route.rb`: route extension
+- `views/index.html.erb`: dashboard page
+- `app.rb` and `config.ru`: alternate Rack-based implementation artifacts
 
-In each child app `manifest.yml`, set an empty or hidden category based on your
-local OOD behavior/policy.
+## What Appverse Reviewers Will Expect
 
+Before publishing, confirm that:
+
+- the integration instructions match your target Open OnDemand version
+- the child apps you want to expose are installed and launch correctly
+- hidden child apps remain discoverable through this dashboard
+- the README describes this as a dashboard integration layer rather than a turnkey standalone app

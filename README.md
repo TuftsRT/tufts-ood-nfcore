@@ -150,6 +150,7 @@ If this repository or its design helps your site, please consider citing the rel
       <strong>Jay McGlothlin</strong><br>
       Associate Director Research Computing<br>
       Research Technology, Tufts Technology Services<br>
+      Tufts University<br>
       Jay.McGlothlin@tufts.edu
     </td>
   </tr>

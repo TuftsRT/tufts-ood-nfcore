@@ -32,7 +32,7 @@ This design is especially useful for HPC users who want to run bioinformatics wo
 
 The parent app provides a single dashboard entry point where users can browse available nf-core workflows and launch specific versions.
 
-![nf-core dashboard](docs/nf-core-dashboard.png)
+<img src="docs/nf-core-dashboard.png" width="50%" alt="nf-core dashboard">
 
 ### Individual Pipeline App Form
 

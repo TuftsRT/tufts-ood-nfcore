@@ -9,7 +9,7 @@ This repository is shared as a public reference implementation of a working OOD 
 
 ## Important Note for Other Sites
 
-If you are external to Tufts and want to build your own nf-core Open OnDemand deployment, you will probably want to start with [TuftsRT/nf-core_open-ondemand](https://github.com/TuftsRT/nf-core_open-ondemand), which is the generator and framework used to create site-specific nf-core OOD apps.
+If you are external to Tufts and want to build your own nf-core Open OnDemand deployment, you will probably want to start with [TuftsRT/nfcore2ood](https://github.com/TuftsRT/nfcore2ood), which is the generator and framework used to create site-specific nf-core OOD apps.
 
 This repository is the deployed output of Tufts's use of that tooling. You are welcome to study it, adapt ideas from it, or use parts of it as a starting point, but most sites will be better served by generating their own deployment and customizing it for their scheduler, file system, module stack, and local policies.
 
@@ -124,7 +124,7 @@ It should not be assumed to be directly portable to another site without local a
 
 ## Related Repositories
 
-- [TuftsRT/nf-core_open-ondemand](https://github.com/TuftsRT/nf-core_open-ondemand): generator/framework for building site-specific nf-core Open OnDemand apps
+- [TuftsRT/nfcore2ood](https://github.com/TuftsRT/nfcore2ood): generator/framework for building site-specific nf-core Open OnDemand app
 - [TuftsRT/tufts_ood_cache_reset](https://github.com/TuftsRT/tufts_ood_cache_reset): utility for clearing cached Open OnDemand app state when deployment changes are not reflected immediately
 
 ## Citation

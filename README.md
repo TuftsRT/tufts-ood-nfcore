@@ -38,7 +38,7 @@ The parent app provides a single dashboard entry point where users can browse av
 
 Each child app presents a pipeline-specific Open OnDemand form for configuring workflow inputs, resources, and optional parameters.
 
-![nf-core app form](docs/nf-core-app.png)
+<img src="docs/nf-core-app.png" width="50%" alt="nf-core app form">
 
 ## Repository Structure
 

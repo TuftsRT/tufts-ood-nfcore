@@ -1,7 +1,0 @@
----
-name: mag 5.0.0
-category: 
-subcategory: metagenomics
-role: batch_connect
-description: |
-  This app will launch the [mag](https://nf-co.re/mag) pipeline developed by nf-core community. 

@@ -1,3 +1,47 @@
+function resetBatchConnectFormOnce() {
+  const url = new URL(window.location.href);
+  const needsReset = url.searchParams.get("cache_reset") === "1" || url.searchParams.has("cache_reset_reload");
+  if (!needsReset) return;
+
+  const clearFields = () => {
+    document.querySelectorAll("input, textarea, select").forEach((field) => {
+      const type = (field.getAttribute("type") || "").toLowerCase();
+      if (["hidden", "submit", "button", "image", "file"].includes(type)) return;
+      if (field.disabled) return;
+
+      if (field.tagName === "SELECT") {
+        field.selectedIndex = 0;
+        field.dispatchEvent(new Event("change", { bubbles: true }));
+        return;
+      }
+
+      if (type === "checkbox" || type === "radio") {
+        field.checked = false;
+        field.dispatchEvent(new Event("change", { bubbles: true }));
+        return;
+      }
+
+      field.value = "";
+      field.dispatchEvent(new Event("input", { bubbles: true }));
+      field.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+
+    url.searchParams.delete("cache_reset");
+    url.searchParams.delete("cache_reset_at");
+    if (url.searchParams.has("cache_reset_reload")) {
+      url.searchParams.delete("cache_reset_reload");
+      window.history.replaceState({}, document.title, url.toString());
+    } else {
+      url.searchParams.set("cache_reset_reload", Date.now().toString());
+      window.location.replace(url.toString());
+    }
+  };
+
+  window.requestAnimationFrame(() => setTimeout(clearFields, 50));
+}
+
+document.addEventListener("DOMContentLoaded", resetBatchConnectFormOnce);
+
 const ICONS = {
   clock: "fa fa-fw me-2 fas fa-clock",
   folder: "fa fa-fw me-2 fas fa-folder-open",
@@ -257,7 +301,7 @@ function isFirstLevelControllerLabel(label) {
 
 function isAlwaysIconLabel(labelText) {
   const normalized = normalizeLabel(labelText);
-  return /\b(cores?|cpus?|memory|ram|hours?|time|walltime|resume|tower_access_token|tower access token|working directory)\b/.test(normalized);
+  return /\b(cores?|cpus?|memory|ram|hours?|time|walltime|resume|tower_access_token|tower access token|workdir|working directory)\b/.test(normalized);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -285,4 +329,112 @@ document.addEventListener("DOMContentLoaded", function () {
 
     label.prepend(icon);
   });
+});
+
+// Resize header images (nf-core pipeline logos) if they are too large
+document.addEventListener("DOMContentLoaded", () => {
+  // Match any <img alt="nf-core-...">
+  const imgs = document.querySelectorAll('img[alt^="nf-core-"]');
+
+  console.log(`Found ${imgs.length} nf-core header image(s)`);
+
+  imgs.forEach((img) => {
+    // Constrain size but keep aspect ratio
+    img.style.setProperty("height", "auto", "important");
+    img.style.setProperty("max-height", "300px", "important");
+    img.style.setProperty("width", "auto", "important");
+    img.style.setProperty("max-width", "600px", "important");
+
+    // Center it
+    img.style.setProperty("display", "block", "important");
+    img.style.setProperty("margin", "0 auto 10px auto", "important");
+  });
+});
+
+function styleSavedFormNotice() {
+  const blockquotes = Array.from(document.querySelectorAll("blockquote"));
+  const notice = blockquotes.find((el) =>
+    /saved form values/i.test(el.textContent || "") && /cache reset utility/i.test(el.textContent || "")
+  );
+  if (!notice) return;
+
+  notice.style.background = "linear-gradient(135deg, #eef6ff 0%, #f8fbff 100%)";
+  notice.style.borderLeft = "4px solid #3b82f6";
+  notice.style.borderRadius = "10px";
+  notice.style.padding = "14px 16px";
+  notice.style.margin = "18px 0 22px";
+  notice.style.boxShadow = "0 6px 18px rgba(59, 130, 246, 0.08)";
+  notice.style.color = "#16324f";
+
+  const paragraphs = notice.querySelectorAll("p");
+  paragraphs.forEach((p, index) => {
+    p.style.margin = index === 0 ? "0 0 2px" : "4px 0 0";
+    p.style.lineHeight = "1.3";
+    p.style.color = "#16324f";
+  });
+
+  const strong = notice.querySelector("strong");
+  if (strong) {
+    strong.style.fontSize = "1rem";
+    strong.style.letterSpacing = "0.01em";
+    strong.style.color = "#0f2f57";
+  }
+
+  notice.querySelectorAll("a").forEach((link) => {
+    link.style.display = "inline-block";
+    link.style.marginTop = "4px";
+    link.style.padding = "6px 12px";
+    link.style.borderRadius = "8px";
+    link.style.background = "#0b6bcb";
+    link.style.color = "#ffffff";
+    link.style.textDecoration = "none";
+    link.style.fontWeight = "700";
+  });
+}
+
+function resetBatchConnectFormOnce() {
+  const url = new URL(window.location.href);
+  const needsReset = url.searchParams.get("cache_reset") === "1" || url.searchParams.has("cache_reset_reload");
+  if (!needsReset) return;
+
+  const clearFields = () => {
+    document.querySelectorAll("input, textarea, select").forEach((field) => {
+      const type = (field.getAttribute("type") || "").toLowerCase();
+      if (["hidden", "submit", "button", "image", "file"].includes(type)) return;
+      if (field.disabled) return;
+
+      if (field.tagName === "SELECT") {
+        field.selectedIndex = 0;
+        field.dispatchEvent(new Event("change", { bubbles: true }));
+        return;
+      }
+
+      if (type === "checkbox" || type === "radio") {
+        field.checked = false;
+        field.dispatchEvent(new Event("change", { bubbles: true }));
+        return;
+      }
+
+      field.value = "";
+      field.dispatchEvent(new Event("input", { bubbles: true }));
+      field.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+
+    url.searchParams.delete("cache_reset");
+    url.searchParams.delete("cache_reset_at");
+    if (url.searchParams.has("cache_reset_reload")) {
+      url.searchParams.delete("cache_reset_reload");
+      window.history.replaceState({}, document.title, url.toString());
+    } else {
+      url.searchParams.set("cache_reset_reload", Date.now().toString());
+      window.location.replace(url.toString());
+    }
+  };
+
+  window.requestAnimationFrame(() => setTimeout(clearFields, 50));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  resetBatchConnectFormOnce();
+  styleSavedFormNotice();
 });

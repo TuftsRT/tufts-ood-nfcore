@@ -1,7 +1,8 @@
 ---
-name: methylseq 4.1.0
-category: 
-subcategory: epigenomics
+name: "methylseq 4.1.0"
+category: ""
+subcategory: "epigenomics"
 role: batch_connect
 description: |
-  This app will launch the [methylseq](https://nf-co.re/methylseq) pipeline developed by nf-core community. 
+  Launch the nf-core pipeline [nf-core-methylseq](https://nf-co.re/methylseq)
+  version 4.1.0 through Open OnDemand.

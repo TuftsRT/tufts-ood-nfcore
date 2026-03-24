@@ -1,98 +1,117 @@
 ---
 cluster: "pax"
 form_header: |
+  <!-- NF2OOD_BANNER_START -->
   <div style="text-align: center; margin-bottom: 20px;">
-    <img src="https:\/\/raw.githubusercontent.com\/nf-core\/rnafusion\/3.0.1b\/\/docs\/images\/nf-core-rnafusion_metro_map.png"
+    <img src="https://raw.githubusercontent.com/nf-core/rnafusion/3.0.1b//docs/images/nf-core-rnafusion_metro_map.png"
          alt="nf-core-rnafusion"
-         style="max-width: 600px; height: auto; margin-bottom: 10px;">
+         style="max-width: 600px; max-height: 600px; height: auto; margin-bottom: 10px;">
   </div>
+  <!-- NF2OOD_BANNER_END -->
 
-  <div style="background-color:#e6f2ff; border-left: 4px solid #3399ff; padding: 10px; border-radius: 6px; margin-top: 20px; margin-bottom: 20px;">
-  This app automatically saves your form inputs between sessions.<br>
-  To restore settings to <strong>default values</strong>, run the following command in terminal:
-  <pre style="background:#f4f4f4; padding:8px; border-radius:5px;"><code>rm -rf ~/ondemand/data/sys/dashboard/batch_connect/cache/sys_nf-core-rnafusion-4-0-0.json</code></pre>
-  </div>
+  > **Saved form values**
+  >
+  > This app automatically saves your form inputs between sessions.
+  >
+  > To clear the saved form values for this app, use the [cache reset utility](/pun/sys/cache_reset/?app_slug=nf-core-rnafusion-4-0-0&return_url=/pun/sys/dashboard/batch_connect/sys/nf-core-rnafusion-4-0-0/session_contexts/new).
 
 attributes:
+  bc_num_hours:
+    label: Number of hours
+    widget: number_field
+    value: 8
+    min: 1
+    step: 1
+    help: Requested walltime for the launch job.
+
 <%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/cpu_partition.yml").indent(2) %>
-<%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/num_cores_generic.yml").indent(2) %>
-<%= File.read("/etc/ood/config/apps/dashboard/batch_connect/partials/num_memory_generic.yml").indent(2) %>
+
+  num_cores:
+    label: Number of cores
+    widget: number_field
+    value: 4
+    min: 1
+    step: 1
+    help: CPU count used for single-node local execution.
+
+  num_memory:
+    label: Amount of memory (GB)
+    widget: number_field
+    value: 8
+    min: 1
+    step: 1
+    help: Memory requested for single-node local execution.
 
   executor:
-    label: Which nextflow executor to use?
+    label: Which Nextflow executor should be used?
     widget: select
     options:
-    - [
-        "slurm", "slurm",
-        data-hide-partition: true,
-        data-hide-num-cores: true,
-        data-hide-num-memory: true
-      ]
-    - ["local", "local"]
+      - ["slurm", "slurm", data-hide-partition: true, data-hide-num-cores: true, data-hide-num-memory: true]
+      - ["local", "local"]
     help: |
-      With slurm, tasks will be distributed to different nodes, local means all tasks will run on a single node.
+      With `slurm`, the pipeline uses its configured scheduler profile.
+      With `local`, tasks run on the submitted node using a generated config.
 
   workdir:
-    label: "Working Directory"
-    widget: "path_selector"
-    directory: "/cluster/tufts"
-    required: false
     label: Working directory
+    widget: path_selector
+    required: false
+    directory: "/cluster/tufts"
     favorites:
-        - /cluster/tufts
-        - /cluster/home
-    
+      - "/cluster/tufts"
+    help: Directory where the Nextflow launch should run.
+
   resume:
-    label: Resume
+    label: Resume previous run
     widget: check_box
     checked_value: 1
     unchecked_value: 0
-    help: |
-           Resume previous run if found
+    help: Resume a previous run if a matching Nextflow work directory exists.
 
   tower_access_token:
-    widget: "text_field"
+    widget: text_field
     required: false
-    label: "TOWER_ACCESS_TOKEN (Optional)"
-    help: "Your TOWER_ACCESS_TOKEN used to monitor runs on [Nextflow Tower](https://seqera.io)."
+    label: Nextflow Tower access token (optional)
+    help: |
+      Optional Seqera Platform or Tower access token used with `-with-tower`.
 
 
   skip_steps:
-    label: "Skip steps"
+    label: 'Skip steps'
     widget: 'check_box'
     html_options:
       data:
         hide-skip_qc-when-un-checked: true
         hide-skip_vcf-when-un-checked: true
         hide-skip_vis-when-un-checked: true
-    help: "Skip analysis steps"
+    help: 'Skip analysis steps'
 
   skip_qc:
-    label: "skip_qc"
+    label: 'skip_qc'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Skip QC steps"
+    help: 'Skip QC steps'
 
   skip_vcf:
-    label: "skip_vcf"
+    label: 'skip_vcf'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Skip vcf creation step"
+    help: 'Skip vcf creation step'
 
   skip_vis:
-    label: "skip_vis"
+    label: 'skip_vis'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Skip visualisation steps"
+    help: 'Skip visualisation steps'
 
   input_output_options:
-    label: "Input/output options"
+    label: 'Input/output options'
     widget: 'check_box'
     html_options:
       data:
@@ -134,317 +153,295 @@ attributes:
         hide-starindex_ref-when-un-checked: true
         hide-tools_cutoff-when-un-checked: true
         hide-whitelist-when-un-checked: true
-    help: "Define where the pipeline should find input data and save output data."
+    help: 'Define where the pipeline should find input data and save output data.'
 
   input:
-    label: "input"
+    label: 'input'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to samplesheet file containing information about the samples in the experiment."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to samplesheet file containing information about the samples in the experiment.'
 
   outdir:
-    label: "outdir"
+    label: 'outdir'
+    required: true
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.'
 
   multiqc_title:
-    label: "multiqc_title"
+    label: 'multiqc_title'
     widget: text_field
-    help: "MultiQC report title. Printed as page header, used for filename if not otherwise specified."
+    help: 'MultiQC report title. Printed as page header, used for filename if not otherwise specified.'
 
   cosmic_username:
-    label: "cosmic_username"
+    label: 'cosmic_username'
     widget: text_field
-    help: "COSMIC username"
+    help: 'COSMIC username'
 
   cosmic_passwd:
-    label: "cosmic_passwd"
+    label: 'cosmic_passwd'
     widget: text_field
-    help: "COSMIC password"
+    help: 'COSMIC password'
 
   genomes_base:
-    label: "genomes_base"
+    label: 'genomes_base'
+    required: true
     widget: text_field
-    help: "Path to reference folder"
+    help: 'Path to reference folder'
 
   genomes_ignore:
-    label: "genomes_ignore"
+    label: 'genomes_ignore'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Don't automatically assign reference parameters to the correct references in --genomes_base"
+    help: 'Don''t automatically assign reference parameters to the correct references in --genomes_base'
 
   genome_gencode_version:
-    label: "genome_gencode_version"
+    label: 'genome_gencode_version'
     widget: number_field
     step: 1
-    help: "gencode version"
+    help: 'gencode version'
 
   tools:
-    label: "tools"
+    label: 'tools'
+    required: true
     widget: text_field
-    help: "Comma-delimited list of tools to run"
+    help: 'Comma-delimited list of tools to run'
 
   read_length:
-    label: "read_length"
+    label: 'read_length'
     widget: number_field
     value: 100
     step: 1
-    help: "The length of the reads provided to the pipeline. This is used for the `--sjdbOverhang` option of STAR as read_length - 1. Providing 1 to this option will disable overhang handling."
+    help: 'The length of the reads provided to the pipeline. This is used for the ''--sjdbOverhang'' option of STAR as read_length - 1. Providing 1 to this option will disable overhang handling.'
 
   arriba_ref_blacklist:
-    label: "arriba_ref_blacklist"
+    label: 'arriba_ref_blacklist'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to arriba reference blacklist"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to arriba reference blacklist'
 
   arriba_ref_cytobands:
-    label: "arriba_ref_cytobands"
+    label: 'arriba_ref_cytobands'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to arriba reference cytobands"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to arriba reference cytobands'
 
   arriba_ref_known_fusions:
-    label: "arriba_ref_known_fusions"
+    label: 'arriba_ref_known_fusions'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to arriba reference known fusions"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to arriba reference known fusions'
 
   arriba_ref_protein_domains:
-    label: "arriba_ref_protein_domains"
+    label: 'arriba_ref_protein_domains'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to arriba reference protein domain"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to arriba reference protein domain'
 
   arriba_fusions:
-    label: "arriba_fusions"
+    label: 'arriba_fusions'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to arriba output"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to arriba output'
 
   fusioncatcher_fusions:
-    label: "fusioncatcher_fusions"
+    label: 'fusioncatcher_fusions'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to fusioncatcher output"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to fusioncatcher output'
 
   fusioncatcher_limitsjdbinsertnsj:
-    label: "fusioncatcher_limitSjdbInsertNsj"
+    label: 'fusioncatcher_limitSjdbInsertNsj'
     widget: number_field
     value: 2000000
     step: 1
-    help: "Use limitSjdbInsertNsj with int for fusioncatcher"
+    help: 'Use limitSjdbInsertNsj with int for fusioncatcher'
 
   fusioncatcher_ref:
-    label: "fusioncatcher_ref"
+    label: 'fusioncatcher_ref'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to fusioncatcher references"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to fusioncatcher references'
 
   fusioninspector_limitsjdbinsertnsj:
-    label: "fusioninspector_limitSjdbInsertNsj"
+    label: 'fusioninspector_limitSjdbInsertNsj'
     widget: number_field
     value: 1000000
     step: 1
-    help: "Use limitSjdbInsertNsj with int for fusioninspector STAR process"
+    help: 'Use limitSjdbInsertNsj with int for fusioninspector STAR process'
 
   fusioninspector_fusions:
-    label: "fusioninspector_fusions"
+    label: 'fusioninspector_fusions'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to a fusion list file built with format GENE1--GENE2"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to a fusion list file built with format GENE1--GENE2'
 
   fusionreport_ref:
-    label: "fusionreport_ref"
+    label: 'fusionreport_ref'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to fusionreport references"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to fusionreport references'
 
   hgnc_ref:
-    label: "hgnc_ref"
+    label: 'hgnc_ref'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to HGNC database file"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to HGNC database file'
 
   hgnc_date:
-    label: "hgnc_date"
+    label: 'hgnc_date'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to HGNC timestamp file for database retrieval"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to HGNC timestamp file for database retrieval'
 
   qiagen:
-    label: "qiagen"
+    label: 'qiagen'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Use QIAGEN instead of SANGER to download COSMIC database"
+    help: 'Use QIAGEN instead of SANGER to download COSMIC database'
 
   salmon_index:
-    label: "salmon_index"
+    label: 'salmon_index'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to salmon index"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to salmon index'
 
   starfusion_fusions:
-    label: "starfusion_fusions"
+    label: 'starfusion_fusions'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to starfusion output"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to starfusion output'
 
   starfusion_ref:
-    label: "starfusion_ref"
+    label: 'starfusion_ref'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to starfusion references"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to starfusion references'
 
   ctatsplicing_cancer_introns:
-    label: "ctatsplicing_cancer_introns"
+    label: 'ctatsplicing_cancer_introns'
     widget: path_selector
-    value: "https://data.broadinstitute.org/Trinity/CTAT_RESOURCE_LIB/CANCER_SPLICING_LIB_SUPPLEMENT/cancer_introns.GRCh38.Jun232020.tsv.gz"
-    directory: /cluster/tufts
+    value: 'https://data.broadinstitute.org/Trinity/CTAT_RESOURCE_LIB/CANCER_SPLICING_LIB_SUPPLEMENT/cancer_introns.GRCh38.Jun232020.tsv.gz'
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to the cancer introns CSV file to create the CTAT-SPLICING reference with"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to the cancer introns CSV file to create the CTAT-SPLICING reference with'
 
   dfam_hmm:
-    label: "dfam_hmm"
+    label: 'dfam_hmm'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to Dfam HMM database file"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to Dfam HMM database file'
 
   dfam_hf3:
-    label: "dfam_h3f"
+    label: 'dfam_h3f'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to Dfam H3F database file"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to Dfam H3F database file'
 
   dfam_hi3:
-    label: "dfam_h3i"
+    label: 'dfam_h3i'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to Dfam H3I database file"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to Dfam H3I database file'
 
   dfam_hm3:
-    label: "dfam_h3m"
+    label: 'dfam_h3m'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to Dfam H3M database file"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to Dfam H3M database file'
 
   dfam_hp3:
-    label: "dfam_h3p"
+    label: 'dfam_h3p'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to Dfam H3P database file"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to Dfam H3P database file'
 
   pfam_file:
-    label: "pfam_file"
+    label: 'pfam_file'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to Pfam database file"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to Pfam database file'
 
   annot_filter_url:
-    label: "annot_filter_url"
+    label: 'annot_filter_url'
     widget: text_field
-    value: "https://data.broadinstitute.org/Trinity/CTAT_RESOURCE_LIB/AnnotFilterRule.pm"
-    help: "URL to annotation filter rule file"
+    value: 'https://data.broadinstitute.org/Trinity/CTAT_RESOURCE_LIB/AnnotFilterRule.pm'
+    help: 'URL to annotation filter rule file'
 
   starindex_ref:
-    label: "starindex_ref"
+    label: 'starindex_ref'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to starindex references"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to starindex references'
 
   tools_cutoff:
-    label: "tools_cutoff"
+    label: 'tools_cutoff'
     widget: number_field
     value: 1
     step: 1
-    help: "Discard fusions identified by less than INT tools"
+    help: 'Discard fusions identified by less than INT tools'
 
   whitelist:
-    label: "whitelist"
+    label: 'whitelist'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to fusions to add to the input of fusioninspector"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to fusions to add to the input of fusioninspector'
 
   read_trimming_options:
-    label: "Read trimming options"
+    label: 'Read trimming options'
     widget: 'check_box'
     html_options:
       data:
@@ -454,70 +451,69 @@ attributes:
         hide-save_trimmed_fail-when-un-checked: true
         hide-min_trimmed_reads-when-un-checked: true
         hide-save_merged-when-un-checked: true
-    help: "Options to adjust read trimming criteria."
+    help: 'Options to adjust read trimming criteria.'
 
   trim_tail:
-    label: "trim_tail"
+    label: 'trim_tail'
     widget: number_field
     step: 1
-    help: "The amount of bases to trim at the tail of each read, none will be trimmed by default"
+    help: 'The amount of bases to trim at the tail of each read, none will be trimmed by default'
 
   trim_tail_fusioncatcher:
-    label: "trim_tail_fusioncatcher"
+    label: 'trim_tail_fusioncatcher'
     widget: number_field
     step: 1
-    help: "The amount of bases to trim at the tail of each read for fusioncatcher, none will be trimmed by default"
+    help: 'The amount of bases to trim at the tail of each read for fusioncatcher, none will be trimmed by default'
 
   adapter_fasta:
-    label: "adapter_fasta"
+    label: 'adapter_fasta'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to adapter fasta file: default: []"
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to adapter fasta file: default: []'
 
   save_trimmed_fail:
-    label: "save_trimmed_fail"
+    label: 'save_trimmed_fail'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "FASTP: Specify true to save files that failed to pass trimming thresholds"
+    help: 'FASTP: Specify true to save files that failed to pass trimming thresholds'
 
   min_trimmed_reads:
-    label: "min_trimmed_reads"
+    label: 'min_trimmed_reads'
     widget: number_field
     value: 1
     step: 1
-    help: "FASTP: Inputs with fewer than this reads will be filtered out of the `reads` output channel"
+    help: 'FASTP: Inputs with fewer than this reads will be filtered out of the "reads" output channel'
 
   save_merged:
-    label: "save_merged"
+    label: 'save_merged'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "FASTP: Specify true to save merged reads"
+    help: 'FASTP: Specify true to save merged reads'
 
   compression_options:
-    label: "Alignment compression options"
+    label: 'Alignment compression options'
     widget: 'check_box'
     html_options:
       data:
         hide-cram-when-un-checked: true
-    help: "Option to compress BAM files to CRAM."
+    help: 'Option to compress BAM files to CRAM.'
 
   cram:
-    label: "cram"
+    label: 'cram'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Output CRAM files instead of BAM files."
+    help: 'Output CRAM files instead of BAM files.'
 
   reference_genome_options:
-    label: "Reference genome options"
+    label: 'Reference genome options'
     widget: 'check_box'
     html_options:
       data:
@@ -533,101 +529,94 @@ attributes:
         hide-species-when-un-checked: true
         hide-dfam_version-when-un-checked: true
         hide-pfam_version-when-un-checked: true
-    help: "Reference genome related files and options required for the workflow."
+    help: 'Reference genome related files and options required for the workflow.'
 
   references_only:
-    label: "references_only"
+    label: 'references_only'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Skip running the analysis, only builds the references"
+    help: 'Skip running the analysis, only builds the references'
 
   fasta:
-    label: "fasta"
+    label: 'fasta'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to FASTA genome file."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to FASTA genome file.'
 
   fai:
-    label: "fai"
+    label: 'fai'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to FASTA genome index file."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to FASTA genome index file.'
 
   genome:
-    label: "genome"
+    label: 'genome'
     widget: text_field
-    help: "Name of iGenomes reference."
+    help: 'Name of iGenomes reference.'
 
   gtf:
-    label: "gtf"
+    label: 'gtf'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to GTF genome file."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to GTF genome file.'
 
   refflat:
-    label: "refflat"
+    label: 'refflat'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to GTF genome file."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to GTF genome file.'
 
   rrna_intervals:
-    label: "rrna_intervals"
+    label: 'rrna_intervals'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to ribosomal interval list."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to ribosomal interval list.'
 
   no_cosmic:
-    label: "no_cosmic"
+    label: 'no_cosmic'
     widget: select
     options:
       - ['false', 'false']
       - ['true', 'true']
-    help: "Avoid using Cosmic DB (for example in clinical case applications where a paid license applies."
+    help: 'Avoid using Cosmic DB (for example in clinical case applications where a paid license applies.'
 
   fusion_annot_lib:
-    label: "fusion_annot_lib"
+    label: 'fusion_annot_lib'
     widget: path_selector
-    directory: /cluster/tufts
+    directory: "<%= ENV.fetch('NF2OOD_DEFAULT_DIRECTORY', ENV.fetch('HOME', '/')) %>"
     favorites:
-      - /cluster/tufts
-      - /cluster/home
-    help: "Path to Fusion Annotation Library to be used in STARFUSION_BUILD."
+      - "<%= ENV.fetch('HOME', '/') %>"
+    help: 'Path to Fusion Annotation Library to be used in STARFUSION_BUILD.'
 
   species:
-    label: "species"
+    label: 'species'
     widget: text_field
-    value: "homo_sapiens"
-    help: "Which species dfam should automatically download, default: homo_sapiens."
+    value: 'homo_sapiens'
+    help: 'Which species dfam should automatically download, default: homo_sapiens.'
 
   dfam_version:
-    label: "dfam_version"
+    label: 'dfam_version'
     widget: number_field
     step: 1
-    help: "Version of dfam to use"
+    help: 'Version of dfam to use'
 
   pfam_version:
-    label: "pfam_version"
+    label: 'pfam_version'
     widget: number_field
     step: 1
-    help: "Version of pfam to use"
-
+    help: 'Version of pfam to use'
 
 form:
   - bc_num_hours
@@ -701,6 +690,5 @@ form:
   - species
   - dfam_version
   - pfam_version
-
   - tower_access_token
   - resume

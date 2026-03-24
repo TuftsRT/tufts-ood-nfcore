@@ -1,7 +1,8 @@
 ---
-name: taxprofiler 1.2.6
+name: "taxprofiler 1.2.6"
 category: ""
-subcategory: metagenomics
+subcategory: "metagenomics"
 role: batch_connect
 description: |
-  This app will launch the [taxprofiler](https://nf-co.re/taxprofiler) pipeline developed by nf-core community. 
+  Launch the nf-core pipeline [nf-core-taxprofiler](https://nf-co.re/taxprofiler)
+  version 1.2.6 through Open OnDemand.

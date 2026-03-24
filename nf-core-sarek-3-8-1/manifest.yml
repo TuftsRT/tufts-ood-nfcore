@@ -1,7 +1,8 @@
 ---
-name: sarek 3.8.1
+name: "sarek 3.8.1"
 category: ""
-subcategory: genomics
+subcategory: "genomics"
 role: batch_connect
 description: |
-  This app will launch the [sarek](https://nf-co.re/sarek) pipeline developed by nf-core community. 
+  Launch the nf-core pipeline [nf-core-sarek](https://nf-co.re/sarek)
+  version 3.8.1 through Open OnDemand.

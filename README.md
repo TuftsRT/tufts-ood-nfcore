@@ -1,161 +1,94 @@
-# tufts-ood-nfcore
+# nf-core Dashboard App for Open OnDemand
 
-This repository contains Tufts University's deployed Open OnDemand (OOD) applications for running [nf-core](https://nf-co.re/) workflows on HPC. It includes:
+This app provides a single Open OnDemand entry point for a collection of versioned `nf-core-*` pipeline apps. It groups child apps by `subcategory`, collapses multiple versions of the same pipeline into one listing, and links users to the corresponding launch forms.
 
-- a parent `nf-core` dashboard app that provides a single entry point for users
-- individual `nf-core-xxx` pipeline apps used to configure and launch specific workflows and versions
+## Purpose
 
-This repository is shared as a public reference implementation of a working OOD nf-core deployment.
+This directory is the parent or landing-page app for the nf-core apps in this repository. It is intended to reduce menu clutter in Open OnDemand by exposing one nf-core dashboard page instead of many separate app tiles.
 
-## Important Note for Other Sites
+## Key Features
 
-If you are external to Tufts and want to build your own nf-core Open OnDemand deployment, you will probably want to start with [TuftsRT/nfcore2ood](https://github.com/TuftsRT/nfcore2ood), which is the generator and framework used to create site-specific nf-core OOD apps.
+- Discovers child apps from `manifest.yml` files under the Open OnDemand system app directory.
+- Groups pipelines by `subcategory` and versions by app name.
+- Links directly to existing child Batch Connect apps.
+- Supports hiding child apps from top-level navigation while keeping them available from this dashboard.
 
-This repository is the deployed output of Tufts's use of that tooling. You are welcome to study it, adapt ideas from it, or use parts of it as a starting point, but most sites will be better served by generating their own deployment and customizing it for their scheduler, file system, module stack, and local policies.
+## How It Works
 
-## What This Repository Provides
+The current implementation is primarily a dashboard integration, not a self-contained standalone app. The files in this directory are used to extend the existing Open OnDemand dashboard:
 
-This repository demonstrates a practical nf-core deployment pattern for Open OnDemand:
+- `controllers/nf_pipelines_controller.rb` builds the grouped pipeline catalog from installed child apps.
+- `initializers/nf_core_dashboard_route.rb` adds the dashboard route.
+- `views/index.html.erb` renders the dashboard page inside Open OnDemand.
 
-- one parent dashboard app for nf-core workflow discovery
-- grouped workflow presentation so users browse pipelines by purpose instead of scanning many individual app tiles
-- version-aware launching from the dashboard into child pipeline apps
-- individual pipeline forms with conditional parameter visibility
-- JavaScript-based form enhancements for clearer visual cues
-- hiding child nf-core apps from top-level navigation while still making them available through the nf-core dashboard
+The code expects child apps to:
 
-This design is especially useful for HPC users who want to run bioinformatics workflows but are not comfortable building long Nextflow command lines by hand.
+- have names that begin with `nf-core-`
+- be Batch Connect apps
+- use `manifest.yml` metadata such as `name` and `subcategory`
 
-## User Interface Overview
+## Installation
 
-### nf-core Dashboard
+1. Install this directory under your Open OnDemand system apps path, typically `/var/www/ood/apps/sys/nf-core`.
+2. Install the child `nf-core-*` apps under the same system apps path.
+3. Link the controller, route initializer, and dashboard view into the dashboard customization locations used by your Open OnDemand deployment.
+4. Restart or refresh the dashboard so the new route and view are loaded.
 
-The parent app provides a single dashboard entry point where users can browse available nf-core workflows and launch specific versions.
+A typical deployment looks like this:
 
-<img src="docs/nf-core-dashboard.png" width="50%" alt="nf-core dashboard">
+```bash
+sudo ln -s /var/www/ood/apps/sys/nf-core/controllers/nf_pipelines_controller.rb \
+  /var/www/ood/apps/sys/dashboard/app/controllers/nf_pipelines_controller.rb
 
-### Individual Pipeline App Form
+sudo mkdir -p /etc/ood/config/apps/dashboard/views/nf_pipelines
+sudo ln -s /var/www/ood/apps/sys/nf-core/views/index.html.erb \
+  /etc/ood/config/apps/dashboard/views/nf_pipelines/index.html.erb
 
-Each child app presents a pipeline-specific Open OnDemand form for configuring workflow inputs, resources, and optional parameters.
+sudo mkdir -p /etc/ood/config/apps/dashboard/initializers
+sudo ln -s /var/www/ood/apps/sys/nf-core/initializers/nf_core_dashboard_route.rb \
+  /etc/ood/config/apps/dashboard/initializers/nf_core_dashboard_route.rb
+```
 
-<img src="docs/nf-core-app.png" width="50%" alt="nf-core app form">
+## Configuration
 
-## Repository Structure
+The dashboard implementation relies on installed child apps rather than a hand-maintained catalog file.
 
-The exact contents may change over time, but the repository generally contains:
+Relevant runtime assumptions:
 
-- a parent app, typically named `nf-core`, which provides the central dashboard page
-- many child apps named like `nf-core-<pipeline>-<version>`
-- each child app includes its own OOD form files, submission templates, and app metadata
-- shared deployment patterns used at Tufts for organizing nf-core apps in OOD
+- Child apps are installed under the system app directory.
+- Child apps use names like `nf-core-rnaseq-3-23-0`.
+- Child app `manifest.yml` files provide readable `name` and `subcategory` values.
+- Child apps may use empty categories so they stay hidden from the main navigation.
 
-## Deployment Model
+The Rack app code in `app.rb` also references `NF_CORE_APPS_DIR` and `OOD_DASHBOARD_BASE`, but the main deployment path in this repository is the dashboard controller/view integration described above.
 
-At Tufts, the parent dashboard app and child nf-core apps are installed as OOD system apps. The parent app is integrated into the existing Open OnDemand dashboard by linking a small set of files into `/etc/ood/config/apps/dashboard`, typically including:
+## Usage
 
-- a route initializer
-- a controller
-- a view template
+1. Open the nf-core dashboard page in Open OnDemand.
+2. Browse by pipeline group or search by pipeline/version.
+3. Select a pipeline version.
+4. Complete the child app form and submit the workflow.
 
-This lets the nf-core dashboard appear as part of the normal OOD interface without maintaining a full fork of the dashboard.
+## Important Notes and Limitations
 
-The child apps are typically hidden from top-level navigation by using empty or site-specific hidden categories in their `manifest.yml` files. They remain launchable through the parent nf-core dashboard.
+- This app is not the workflow launcher itself; the child apps handle submission.
+- The current grouping logic depends on manifest naming conventions and app names.
+- The repository includes a sample `config/pipelines.yml`, but the dashboard controller does not use it at runtime.
+- The Rack app stub in `app.rb` references a template path that is not the main path used by the deployed dashboard integration.
 
-## Why This Design Is Useful
+## Files
 
-This deployment pattern has several practical benefits for HPC centers:
+- `manifest.yml`: metadata for the parent app
+- `controllers/nf_pipelines_controller.rb`: dashboard controller
+- `initializers/nf_core_dashboard_route.rb`: route extension
+- `views/index.html.erb`: dashboard page
+- `app.rb` and `config.ru`: alternate Rack-based implementation artifacts
 
-- Users get one clear entry point for nf-core workflows instead of many separate menu items.
-- Bioinformatics workflows do not clutter the shared OOD navigation for non-bioinformatics users.
-- Pipeline versions stay available, but are organized under the relevant workflow.
-- Existing child apps remain reusable, so the parent dashboard is mainly an organizational layer.
-- The OOD dashboard integration is easier to maintain than carrying a full dashboard fork.
-- Other centers can reproduce the same model with their own local configuration.
+## Deployment Notes
 
-## Requirements
+Before publishing, confirm that:
 
-A site using this repository or adapting its design should already have:
-
-- Open OnDemand installed and working
-- a supported batch scheduler configured in OOD
-- nf-core workflows packaged as OOD apps or generated from a compatible pipeline-app generator
-- local decisions for software delivery, such as modules, Conda, Apptainer/Singularity, or other runtime methods
-- shared storage paths and permissions suitable for user-submitted workflows
-
-## Suggested Deployment Steps
-
-The exact steps depend on your site, but a typical process is:
-
-1. Install the parent `nf-core` app and the child `nf-core-xxx` apps under your OOD system app directory.
-2. Review and customize each child app for your scheduler, partitions/queues, file system paths, modules, and local policies.
-3. Link the parent dashboard route, controller, and view into `/etc/ood/config/apps/dashboard`.
-4. Configure child app visibility in `manifest.yml` so users access them through the parent dashboard rather than top-level navigation.
-5. Restart or refresh the OOD dashboard environment.
-6. Test the parent dashboard, several child app forms, and at least one real workflow submission.
-7. Plan for routine cache maintenance if your deployment uses shared Open OnDemand app cache or staged app metadata. At Tufts, cache cleanup is handled with a companion utility repository.
-
-## Site Customization Areas
-
-Other HPC centers should expect to modify at least the following:
-
-- scheduler and queue/partition settings
-- CPU, memory, and walltime defaults
-- file system paths and favorites in OOD form widgets
-- module/container/runtime configuration
-- local branding and descriptive text
-- which nf-core workflows and versions are exposed
-- category and subcategory metadata used for dashboard grouping
-
-## Notes on Form Behavior
-
-Many nf-core pipelines support multiple analysis routes, optional tools, and advanced parameters. To keep forms usable, child apps in this deployment use progressive disclosure patterns such as OOD `data-hide-*` attributes in `form.yml.erb`. This means users only see some advanced parameters after enabling the related option.
-
-Some child apps also use `form.js` to add icons and clearer visual emphasis to important controls.
-
-## Reference Implementation, Not a Universal Package
-
-This repository reflects Tufts-specific deployment choices. It should be treated as:
-
-- a working example of how nf-core can be deployed in OOD
-- a reference for architecture and integration patterns
-- a source of practical ideas for form design and dashboard organization
-
-It should not be assumed to be directly portable to another site without local adaptation.
-
-## Related Repositories
-
-- [TuftsRT/nfcore2ood](https://github.com/TuftsRT/nfcore2ood): generator/framework for building site-specific nf-core Open OnDemand app
-- [TuftsRT/tufts_ood_cache_reset](https://github.com/TuftsRT/tufts_ood_cache_reset): utility for clearing cached Open OnDemand app state when deployment changes are not reflected immediately
-
-## Citation
-
-If this repository or its design helps your site, please consider citing the related publication:
-
-- Y. Zhang et al., _nf-core on Open OnDemand: community-curated bioinformatics pipelines for everyone_, PEARC '24. DOI: https://doi.org/10.1145/3626203.3670559
-
-## Contributors
-
-<table>
-  <tr>
-    <td align="center" valign="top" width="50%">
-      <img src="https://github.com/zhan4429.png" alt="Yucheng Zhang" width="120"><br><br>
-      <strong>Yucheng Zhang</strong><br>
-      Senior Bioinformatics Engineer<br>
-      Research Technology, Tufts Technology Services<br>
-      Tufts University<br>
-      yucheng.zhang@tufts.edu
-    </td>
-    <td align="center" valign="top" width="50%">
-      <img src="https://github.com/mcglow2.png" alt="Jay McGlothlin" width="120"><br><br>
-      <strong>Jay McGlothlin</strong><br>
-      Associate Director Research Computing<br>
-      Research Technology, Tufts Technology Services<br>
-      Tufts University<br>
-      Jay.McGlothlin@tufts.edu
-    </td>
-  </tr>
-</table>
-
-## Contact
-
-If you are interested in the approach and want to discuss deployment details, please open an issue in this repository or contact the Tufts Research Technology team.
+- the integration instructions match your target Open OnDemand version
+- the child apps you want to expose are installed and launch correctly
+- hidden child apps remain discoverable through this dashboard
+- the README describes this as a dashboard integration layer rather than a turnkey standalone app

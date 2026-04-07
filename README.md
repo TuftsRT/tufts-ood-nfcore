@@ -15,6 +15,20 @@ This directory is the parent or landing-page app for the nf-core apps in this re
 - Links directly to existing child Batch Connect apps.
 - Supports hiding child apps from top-level navigation while keeping them available from this dashboard.
 
+## User Interface Overview
+
+### nf-core Dashboard
+
+The parent app provides a single dashboard entry point where users can browse available nf-core workflows and launch specific versions.
+
+<img src="docs/nf-core-dashboard.png" width="70%" alt="nf-core dashboard">
+
+### Individual Pipeline App Form
+
+The parent dashboard links to individual pipeline-app forms where users configure workflow inputs, resources, and optional parameters.
+
+<img src="docs/nf-core-app.png" width="70%" alt="nf-core app form">
+
 ## How It Works
 
 The current implementation is primarily a dashboard integration, not a self-contained standalone app. The files in this directory are used to extend the existing Open OnDemand dashboard:

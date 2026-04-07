@@ -54,6 +54,14 @@ The code expects child apps to:
 
 A typical deployment looks like this:
 
+These symlinks are needed because this app does not replace the full Open OnDemand dashboard. Instead, it adds three small integration points into the existing dashboard codebase:
+
+- `nf_pipelines_controller.rb`: adds a dashboard controller action that discovers the installed `nf-core-*` child apps and groups them for display.
+- `views/index.html.erb`: provides the dashboard page template that renders the nf-core landing page inside the existing Open OnDemand dashboard.
+- `nf_core_dashboard_route.rb`: registers the route so the dashboard knows where the nf-core page lives.
+
+Using symlinks keeps the parent app self-contained in one repository while still allowing Open OnDemand's dashboard to load these files from the locations where it expects controllers, views, and initializers. It also makes updates easier, because you can update the files in the app directory without maintaining a forked copy of the full dashboard application.
+
 ```bash
 sudo ln -s /var/www/ood/apps/sys/nf-core/controllers/nf_pipelines_controller.rb \
   /var/www/ood/apps/sys/dashboard/app/controllers/nf_pipelines_controller.rb

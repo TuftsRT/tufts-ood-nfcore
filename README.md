@@ -2,7 +2,7 @@
 
 This app provides a single Open OnDemand entry point for a collection of versioned `nf-core-*` pipeline apps. It groups child apps by `subcategory`, collapses multiple versions of the same pipeline into one listing, and links users to the corresponding launch forms.
 
-This repository contains only the parent dashboard app. To make it usable, you must also install the companion pipeline-app repository: [TuftsRT/tufts-ood_nfcore_pipelines](https://github.com/TuftsRT/tufts-ood_nfcore_pipelines).
+This repository contains only the parent dashboard app. To make it usable, you must also install the companion pipeline-app repository: [TuftsRT/tufts-ood_nfcore_pipelines](https://github.com/TuftsRT/tufts-ood_nfcore_pipelines). To convert nf-core pipelines into Open OnDemand apps, you can use our in-house tool [nfcore2ood](https://github.com/TuftsRT/nfcore2ood).
 
 ## Purpose
 

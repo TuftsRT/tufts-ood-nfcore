@@ -138,7 +138,7 @@ class NfCoreHomeApp
     return [0, 0, 0] if version_label.to_s.empty?
 
     numeric = version_label.to_s.sub(/^v/i, '')
-    pieces = numeric.split('.').map { |p| p.to_i }
+    pieces = numeric.split('.').map { |piece| piece.to_i }
     (pieces + [0, 0, 0])[0, 3]
   end
 

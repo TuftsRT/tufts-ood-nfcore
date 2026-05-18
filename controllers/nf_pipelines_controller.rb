@@ -37,7 +37,9 @@ class NfPipelinesController < ApplicationController
 
     grouped.keys.sort.map do |subcat|
       pipelines = grouped[subcat].values.map do |p|
-        p[:versions].uniq { |v| v[:app].router.name }.sort_by! { |v| v[:label] }.reverse!
+        p[:versions].uniq! { |v| v[:app].router.name }
+        p[:versions].sort_by! { |v| version_sort_key(v[:label]) }
+        p[:versions].reverse!
         p
       end.sort_by { |p| p[:title] }
 
@@ -53,5 +55,13 @@ class NfPipelinesController < ApplicationController
     version = "v#{version}" unless version.empty? || version.start_with?('v')
     title = m ? name.sub(/(v?\d+(?:\.\d+)+)\s*\z/, '').strip : name
     [title.empty? ? app_name : title, version]
+  end
+
+  def version_sort_key(version_label)
+    return [0, 0, 0] if version_label.to_s.empty?
+
+    numeric = version_label.to_s.sub(/^v/i, '')
+    pieces = numeric.split('.').map { |piece| piece.to_i }
+    (pieces + [0, 0, 0])[0, 3]
   end
 end

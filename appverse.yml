@@ -1,0 +1,130 @@
+# =============================================================================
+# appverse.yml — Tufts nf-core for Open OnDemand (MONOREPO)
+# One repo shipping the dashboard landing page + 27 versioned nf-core-* apps.
+# Top-level keys describe the REPO; `apps:` lists each member app by subpath.
+# =============================================================================
+
+title: "Tufts nf-core for Open OnDemand"
+description: >
+  Open OnDemand apps for running nf-core pipelines on Tufts HPC: a dashboard
+  landing page that groups pipelines by category and collapses versions, plus
+  the individual versioned nf-core-* Batch Connect launch apps.
+
+website: "https://github.com/TuftsRT/tufts-ood-nfcore"
+docs: "https://nf-co.re"
+
+tags:
+  # Repo-level DISCOVERY tags (separate vocabulary from implementation_tags).
+  - "bioinformatics"
+  - "nextflow"
+  - "nf-core"
+
+shared_implementation_tags:
+  - "containerized"
+
+maintainer:
+  name: "Tufts Research Technology"
+  support_url: "https://it.tufts.edu/researchtechnology.tufts.edu"
+
+apps:
+  - path: "dashboard"
+    name: "nf-core Pipelines Dashboard"
+    description: "Landing page that groups nf-core pipelines by category, collapses versions, and links to each launch form."
+    software: "nf-core"
+    app_type: "dashboards"
+
+  - path: "nf-core-ampliseq-2-16-1"
+    name: "nf-core Ampliseq (v2.16.1)"
+    description: "Amplicon sequencing (16S/ITS) taxonomic profiling — nf-core/ampliseq."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-chipseq-2-1-0"
+    name: "nf-core ChIP-seq (v2.1.0)"
+    description: "ChIP-seq peak-calling and QC — nf-core/chipseq."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-denovotranscript-1-2-1"
+    name: "nf-core De Novo Transcript (v1.2.1)"
+    description: "De novo transcriptome assembly — nf-core/denovotranscript."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-differentialabundance-2-0-0"
+    name: "nf-core Differential Abundance (v2.0.0)"
+    description: "Differential abundance / expression analysis — nf-core/differentialabundance."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-fetchngs-1-12-0"
+    name: "nf-core FetchNGS (v1.12.0)"
+    description: "Download and prepare public sequencing data from SRA/ENA/GEO — nf-core/fetchngs."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-funcscan-3-0-0"
+    name: "nf-core Funcscan (v3.0.0)"
+    description: "Screen for functional genes (AMR, BGCs) in (meta)genomes — nf-core/funcscan."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-mag-5-4-2"
+    name: "nf-core MAG (v5.4.2)"
+    description: "Metagenome assembly and binning — nf-core/mag."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-methylseq-4-1-0"
+    name: "nf-core Methylseq (v4.1.0)"
+    description: "Bisulfite sequencing / DNA methylation analysis — nf-core/methylseq."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-pathogensurveillance-1-1-0"
+    name: "nf-core Pathogen Surveillance (v1.1.0)"
+    description: "Pathogen identification, variant calling, and surveillance — nf-core/pathogensurveillance."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-proteinfamilies-2-4-0"
+    name: "nf-core Protein Families (v2.4.0)"
+    description: "Protein family generation and annotation — nf-core/proteinfamilies."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-rnafusion-4-1-0"
+    name: "RNA Fusion (v4.1.0)"
+    description: "Detection of gene fusions from RNA-seq — nf-core/rnafusion."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-rnaseq-3-25-0"
+    name: "nf-core RNA-seq (v3.25.0)"
+    description: "Bulk RNA-seq quantification and QC — nf-core/rnaseq."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-rnaseq-3-26-0"
+    name: "nf-core RNA-seq (v3.26.0)"
+    description: "Bulk RNA-seq quantification and QC — nf-core/rnaseq."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-sarek-3-8-1"
+    name: "nf-core Sarek (v3.8.1)"
+    description: "Germline and somatic variant calling (WGS/WES) — nf-core/sarek."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-scrnaseq-4-1-0"
+    name: "nf-core scRNA-seq (v4.1.0)"
+    description: "Single-cell RNA-seq pre-processing and quantification — nf-core/scrnaseq."
+    software: "nf-core"
+    app_type: "batch-connect-basic"
+
+  - path: "nf-core-taxprofiler-2-0-0"
+    name: "nf-core Taxprofiler (v2.0.0)"
+    description: "Taxonomic profiling of metagenomic samples — nf-core/taxprofiler."
+    software: "nf-core"
+    app_type: "batch-connect-basic"

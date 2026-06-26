@@ -2,11 +2,11 @@
 
 This app provides a single Open OnDemand entry point for a collection of versioned `nf-core-*` pipeline apps. It groups child apps by `subcategory`, collapses multiple versions of the same pipeline into one listing, and links users to the corresponding launch forms.
 
-This repository contains only the parent dashboard app. To make it usable, you must also install the companion pipeline-app repository: [TuftsRT/tufts-ood_nfcore_pipelines](https://github.com/TuftsRT/tufts-ood_nfcore_pipelines). To convert nf-core pipelines into Open OnDemand apps, you can use our in-house tool [nfcore2ood](https://github.com/TuftsRT/nfcore2ood).
+This directory is the dashboard app within the [tufts-ood-nfcore](https://github.com/TuftsRT/tufts-ood-nfcore) monorepo. The `nf-core-*` Batch Connect pipeline apps it links to live as sibling directories at the repository root — one repo, registered with Appverse as a Monorepo via the root `appverse.yml`. To convert nf-core pipelines into Open OnDemand apps, you can use our in-house tool [nfcore2ood](https://github.com/TuftsRT/nfcore2ood).
 
 ## Purpose
 
-This directory is the parent or landing-page app for the nf-core apps in this repository. It is intended to reduce menu clutter in Open OnDemand by exposing one nf-core dashboard page instead of many separate app tiles.
+This directory is the landing-page app for the `nf-core-*` apps in the monorepo. It is intended to reduce menu clutter in Open OnDemand by exposing one nf-core dashboard page instead of many separate app tiles.
 
 ## Key Features
 
@@ -45,12 +45,11 @@ The code expects child apps to:
 
 ## Installation
 
-1. Download or clone this repository for the parent dashboard app.
-2. Download or clone the companion pipeline repository: [TuftsRT/tufts-ood_nfcore_pipelines](https://github.com/TuftsRT/tufts-ood_nfcore_pipelines).
-3. Install this directory under your Open OnDemand system apps path, typically `/var/www/ood/apps/sys/nf-core`.
-4. Install the child `nf-core-*` apps from the companion repository under the same system apps path.
-5. Link the controller, route initializer, and dashboard view into the dashboard customization locations used by your Open OnDemand deployment.
-6. Restart or refresh the dashboard so the new route and view are loaded.
+1. Download or clone the [tufts-ood-nfcore](https://github.com/TuftsRT/tufts-ood-nfcore) monorepo, which contains this `dashboard/` directory and the sibling `nf-core-*` pipeline apps.
+2. Install this `dashboard/` directory under your Open OnDemand system apps path, typically `/var/www/ood/apps/sys/nf-core`.
+3. Install the sibling `nf-core-*` apps from the monorepo under the same system apps path.
+4. Link the controller, route initializer, and dashboard view into the dashboard customization locations used by your Open OnDemand deployment.
+5. Restart or refresh the dashboard so the new route and view are loaded.
 
 A typical deployment looks like this:
 

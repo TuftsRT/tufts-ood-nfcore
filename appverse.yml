@@ -94,7 +94,7 @@ apps:
     app_type: "batch-connect-basic"
 
   - path: "nf-core-rnafusion-4-1-0"
-    name: "RNA Fusion (v4.1.0)"
+    name: "nf-core RNA Fusion (v4.1.0)"
     description: "Detection of gene fusions from RNA-seq — nf-core/rnafusion."
     software: "nf-core"
     app_type: "batch-connect-basic"

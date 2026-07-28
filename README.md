@@ -4,6 +4,9 @@ A single repository (monorepo) of Open OnDemand apps for running [nf-core](https
 
 To convert nf-core pipelines into Open OnDemand apps, see our in-house tool [nfcore2ood](https://github.com/TuftsRT/nfcore2ood).
 
+The utility for cache reset is available at [tufts_ood_cache_reset](https://github.com/TuftsRT/tufts_ood_cache_reset).
+
+
 ## Repository layout
 
 ```
